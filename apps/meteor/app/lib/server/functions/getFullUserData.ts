@@ -1,4 +1,4 @@
-import { IUser } from '@rocket.chat/core-typings';
+import type { IUser } from '@rocket.chat/core-typings';
 
 import { Logger } from '../../../logger/server';
 import { settings } from '../../../settings/server';
@@ -32,7 +32,6 @@ const fullFields = {
 	bio: 1,
 	createdAt: 1,
 	lastLogin: 1,
-	services: 1,
 	requirePasswordChange: 1,
 	requirePasswordChangeReason: 1,
 	roles: 1,
@@ -44,16 +43,17 @@ const fullFields = {
 let publicCustomFields: Record<string, 0 | 1> = {};
 let customFields: Record<string, 0 | 1> = {};
 
-settings.watch<string>('Accounts_CustomFields', (value) => {
+settings.watch<string>('Accounts_CustomFields', (settingValue) => {
 	publicCustomFields = {};
 	customFields = {};
 
-	if (!value.trim()) {
+	const value = settingValue?.trim();
+	if (!value) {
 		return;
 	}
 
 	try {
-		const customFieldsOnServer = JSON.parse(value.trim());
+		const customFieldsOnServer = JSON.parse(value);
 		Object.keys(customFieldsOnServer).forEach((key) => {
 			const element = customFieldsOnServer[key];
 			if (element.public) {
@@ -74,11 +74,6 @@ const getFields = (canViewAllInfo: boolean): Record<string, 0 | 1> => ({
 	...getCustomFields(canViewAllInfo),
 });
 
-const removePasswordInfo = (user: IUser): Omit<IUser, 'services'> => {
-	const { services, ...result } = user;
-	return result;
-};
-
 export async function getFullUserDataByIdOrUsername(
 	userId: string,
 	{ filterId, filterUsername }: { filterId: string; filterUsername?: undefined } | { filterId?: undefined; filterUsername: string },
@@ -91,8 +86,12 @@ export async function getFullUserDataByIdOrUsername(
 	const fields = getFields(canViewAllInfo);
 
 	const options = {
-		fields,
+		fields: {
+			...fields,
+			...(myself && { services: 1 }),
+		},
 	};
+
 	const user = Users.findOneByIdOrUsername(targetUser, options);
 	if (!user) {
 		return null;
@@ -100,5 +99,5 @@ export async function getFullUserDataByIdOrUsername(
 
 	user.canViewAllInfo = canViewAllInfo;
 
-	return myself ? user : removePasswordInfo(user);
+	return user;
 }
