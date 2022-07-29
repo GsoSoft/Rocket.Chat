@@ -11,6 +11,7 @@ import type {
 	ITasksModel,
 	ITransactionsModel,
 	IFundBalancesModel,
+	IMediaPostsModel,
 } from '@rocket.chat/model-typings';
 
 import { proxify } from './proxify';
@@ -27,3 +28,4 @@ export const Tags = proxify<ITagsModel>('ITagsModel');
 export const Tasks = proxify<ITasksModel>('ITasksModel');
 export const Transactions = proxify<ITransactionsModel>('ITransactionsModel');
 export const PaymentGateways = proxify<IPaymentGatewaysModel>('IPaymentGatewaysModel');
+export const MediaPosts = proxify<IMediaPostsModel>('IMediaPostsModel');

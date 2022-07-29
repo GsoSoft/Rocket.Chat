@@ -21,3 +21,4 @@ export * from './IGateway';
 export * from './IPost';
 export * from './IProduct';
 export * from './ITransaction';
+export * from './IMediaPost';

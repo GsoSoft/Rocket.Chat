@@ -9,3 +9,4 @@ export * from './TagService';
 export * from './TaskService';
 export * from './FundService';
 export * from './fake';
+export * from './MediaPostService';

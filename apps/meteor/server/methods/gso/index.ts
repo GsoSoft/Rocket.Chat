@@ -23,3 +23,5 @@ import './tags';
 import './setUserReward';
 
 import './workers';
+
+import './mediaPosts';

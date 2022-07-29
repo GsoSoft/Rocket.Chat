@@ -59,6 +59,19 @@ const TopBar = ({ location }: Props): ReactElement => {
 								</Box>
 							),
 						},
+						instagram: {
+							action: function noRefCheck(): void {
+								// This so as to allow the linting to pass - @typescript-eslint/no-empty-function
+								dispatch({ type: 'ADD_LOCATION', payload: { location: `/${location}` } });
+								FlowRouter.go('/instagram');
+							},
+							label: (
+								<Box alignItems='center' display='flex'>
+									<Icon mie='x4' name='camera' size='x20' />
+									Instagram
+								</Box>
+							),
+						},
 						tasks: {
 							action: function noRefCheck(): void {
 								// This so as to allow the linting to pass - @typescript-eslint/no-empty-function

@@ -8,3 +8,4 @@ export * from './TagGroups';
 export * from './Tags';
 export * from './Tasks';
 export * from './Transactions';
+export * from './MediaPosts';

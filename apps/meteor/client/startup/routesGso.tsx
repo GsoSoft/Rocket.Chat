@@ -6,6 +6,7 @@ import React, { lazy } from 'react';
 import { appLayout } from '../lib/appLayout';
 import MainLayout from '../views/root/MainLayout';
 import FundBalanceView from '../views_gso/FundBalanceView';
+import InstagramCloneView from '../views_gso/instagramClone/InstagramCloneView';
 
 const BlogViewPage = lazy(() => import('../views_gso/blog/BlogView'));
 const GamesViewPage = lazy(() => import('../views_gso/games/GamesView'));
@@ -108,6 +109,17 @@ FlowRouter.route('/browse-freelancers', {
 		appLayout.render(
 			<MainLayout>
 				<BrowseFreelancersView />
+			</MainLayout>,
+		);
+	},
+});
+
+FlowRouter.route('/instagram', {
+	name: 'instagram',
+	action: () => {
+		appLayout.render(
+			<MainLayout>
+				<InstagramCloneView />
 			</MainLayout>,
 		);
 	},

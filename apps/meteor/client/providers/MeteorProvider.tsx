@@ -9,6 +9,7 @@ import ConnectionStatusProvider from './ConnectionStatusProvider';
 import CustomSoundProvider from './CustomSoundProvider';
 import DailyTasksProvider from './DailyTasksProvider';
 import { DeviceProvider } from './DeviceProvider/DeviceProvider';
+import InstagramPageContextProvider from './InstagramPageProvider';
 import LayoutProvider from './LayoutProvider';
 import ModalProvider from './ModalProvider';
 import OmnichannelProvider from './OmnichannelProvider';
@@ -47,7 +48,9 @@ const MeteorProvider: FC = ({ children }) => (
 																				<PaymentResultProvider>
 																					<DailyTasksProvider>
 																						<AddressProvider>
-																							<AttachmentProvider>{children}</AttachmentProvider>
+																							<InstagramPageContextProvider>
+																								<AttachmentProvider>{children}</AttachmentProvider>
+																							</InstagramPageContextProvider>
 																						</AddressProvider>
 																					</DailyTasksProvider>
 																				</PaymentResultProvider>
