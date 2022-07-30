@@ -11,4 +11,8 @@ export interface ITask extends IRocketChatRecord {
 	sortOrder: number;
 	status: -1 | 0 | 1;
 	reward: number;
+	/**
+	 * react route ?!
+	 */
+	uiRoute: string;
 }
