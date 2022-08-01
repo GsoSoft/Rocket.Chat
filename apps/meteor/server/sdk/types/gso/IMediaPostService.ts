@@ -16,7 +16,7 @@ export interface IMediaPostService {
 
 	list(limit?: number): AggregationCursor<IMediaPost> | FindCursor;
 
-	update(blogId: string, params: IMediaPostUpdateParams): Promise<IMediaPost>;
+	update(blogId: string, params: IMediaPostUpdateParams): Promise<void>;
 
 	delete(blogId: string): Promise<void>;
 

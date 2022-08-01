@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Dropzone, FileItem, FileValidated } from '@dropzone-ui/react';
 import { IMediaPost } from '@rocket.chat/core-typings';
 import { Button, Field, FieldGroup, Icon, Modal, TextAreaInput } from '@rocket.chat/fuselage';

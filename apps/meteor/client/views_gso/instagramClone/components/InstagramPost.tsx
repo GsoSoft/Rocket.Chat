@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/interface-name-prefix */
 /* eslint-disable react/no-multi-comp */
 import { Tile, Box, Icon, Tooltip } from '@rocket.chat/fuselage';
 import sha256 from 'crypto-js/sha256';
