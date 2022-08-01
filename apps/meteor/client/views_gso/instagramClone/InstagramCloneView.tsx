@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react/no-multi-comp */
 import { Button } from '@rocket.chat/fuselage';
@@ -20,7 +19,6 @@ const InstagramClone = (): ReactElement => {
 	const t = useTranslation();
 	const [openModal, setOpenModal] = useState(false);
 	const { value } = useContext(UserPreviousPageContext);
-	console.log(posts);
 
 	const handleRouteBack = (): void => {
 		FlowRouter.go(`${value.location}`);

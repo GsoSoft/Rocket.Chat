@@ -6,7 +6,6 @@ import React, { lazy } from 'react';
 import { appLayout } from '../lib/appLayout';
 import MainLayout from '../views/root/MainLayout';
 import FundBalanceView from '../views_gso/FundBalanceView';
-import InstagramCloneView from '../views_gso/instagramClone/InstagramCloneView';
 
 const BlogViewPage = lazy(() => import('../views_gso/blog/BlogView'));
 const GamesViewPage = lazy(() => import('../views_gso/games/GamesView'));
@@ -16,6 +15,8 @@ const MessagesViewPage = lazy(() => import('../views/messages/MessagesView'));
 const EmployerPreferencesView = lazy(() => import('../views_gso/employerPreferences/EmployerPreferencesView'));
 const HallOfFameView = lazy(() => import('../views_gso/hallOfFame/HallOfFameView'));
 const BrowseFreelancersView = lazy(() => import('../views_gso/browseFreelancers/BrowseFreelancersView'));
+const InstagramCloneView = lazy(() => import('../views_gso/instagramClone/InstagramCloneView'));
+const ListingPageView = lazy(() => import('../views_gso/instagramClone/components/listingPage'));
 const SelectRoleViewPage = lazy(() => import('../views/roles/SelectRoleView'));
 const RoleResultViewPage = lazy(() => import('../views/roles/components/RoleResult'));
 const EscrowHistoryViewPage = lazy(() => import('../views_gso/escrowHistory/escrowHistory'));
@@ -120,6 +121,17 @@ FlowRouter.route('/instagram', {
 		appLayout.render(
 			<MainLayout>
 				<InstagramCloneView />
+			</MainLayout>,
+		);
+	},
+});
+
+FlowRouter.route('/instagram-listing-page', {
+	name: 'instagram-listing-page',
+	action: () => {
+		appLayout.render(
+			<MainLayout>
+				<ListingPageView />
 			</MainLayout>,
 		);
 	},
