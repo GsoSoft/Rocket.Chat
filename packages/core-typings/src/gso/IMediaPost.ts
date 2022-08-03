@@ -3,7 +3,10 @@ import type { IComment } from './IComment';
 
 export interface IMediaPost extends IRocketChatRecord {
 	caption: string;
-	images: Record<string, any>[];
+	images: {
+		url: string;
+		id: string;
+	}[];
 	createdBy?: string;
 	createdAt: Date;
 	likes: number;

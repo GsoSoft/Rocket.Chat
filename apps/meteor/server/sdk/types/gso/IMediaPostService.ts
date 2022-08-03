@@ -1,4 +1,4 @@
-import { AtLeastOne, IMediaPost } from '@rocket.chat/core-typings';
+import { AtLeastOne, IMediaPost, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 import { AggregationCursor, FindCursor } from 'mongodb';
 
 export type IMediaPostWithoutID = Omit<IMediaPost, '_id'>;
@@ -16,9 +16,11 @@ export interface IMediaPostService {
 
 	list(limit?: number): AggregationCursor<IMediaPost> | FindCursor;
 
-	update(blogId: string, params: IMediaPostUpdateParams): Promise<void>;
+	update(blogId: string, params: IMediaPostUpdateParams): Promise<IMediaPost>;
 
 	delete(blogId: string): Promise<void>;
 
 	getMediaPost(blogId: string): Promise<IMediaPost>;
+
+	listWithoutComments(paginationOptions?: IPaginationOptions, queryOptions?: IQueryOptions<IMediaPost>): Promise<IMediaPost[]>;
 }

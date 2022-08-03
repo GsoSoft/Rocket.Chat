@@ -153,7 +153,7 @@ Meteor.methods({
 		check(
 			queryOptions,
 			Match.ObjectIncluding({
-				sort: Match.Optional(Object),
+				sort: Match.Optional(Match.Any),
 				query: Match.Optional(Object),
 			}),
 		);

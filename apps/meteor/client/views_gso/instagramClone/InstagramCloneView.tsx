@@ -9,6 +9,7 @@ import React, { ReactElement, useContext, useEffect, useState } from 'react';
 
 import Page from '../../components/Page';
 import ProfileHeader from '../../components/ProfileHeader/ProfileHeader';
+import { DispatchInstagramPageContext, InstagramPageGlobalContext } from '../../contexts/InstagramPageContext/GlobalState';
 import { UserPreviousPageContext } from '../../contexts/UserPreviousPageContext/GlobalState';
 import InstagramPost from './components/InstagramPost';
 import CreatePostModal from './components/createPostModal';
@@ -19,25 +20,28 @@ const InstagramClone = (): ReactElement => {
 	const t = useTranslation();
 	const [openModal, setOpenModal] = useState(false);
 	const { value } = useContext(UserPreviousPageContext);
+	const { numberOfResults } = useContext(InstagramPageGlobalContext);
+	const { dispatch } = useContext(DispatchInstagramPageContext);
 
 	const handleRouteBack = (): void => {
 		FlowRouter.go(`${value.location}`);
 	};
 
 	useEffect(() => {
-		if (!posts.length || createdPost) {
-			Meteor.call('getMediaPosts', 10, (error, result) => {
+		if (!posts.length || createdPost || numberOfResults > 10) {
+			Meteor.call('getMediaPostsWithoutComment', { offset: 1, count: numberOfResults }, {}, (error, result) => {
+				console.log(numberOfResults);
 				if (result.length) {
+					console.log(result);
 					setPosts(result);
 					setCreatedPost(false);
 				}
-
 				if (error) {
 					console.log(error);
 				}
 			});
 		}
-	}, [posts.length, createdPost]);
+	}, [posts.length, createdPost, numberOfResults]);
 
 	const extractFileType = (url: string): string => {
 		if (url) {
@@ -48,6 +52,10 @@ const InstagramClone = (): ReactElement => {
 			return 'video';
 		}
 		return '';
+	};
+
+	const loadMore = (): void => {
+		dispatch({ type: 'LOAD_MORE', payload: { numberOfResults: numberOfResults + 10 } });
 	};
 	return (
 		<Page id='instagram-clone-page'>
@@ -67,7 +75,9 @@ const InstagramClone = (): ReactElement => {
 							</div>
 					  ))
 					: 'Loading...'}
-				<Button primary>Load more</Button>
+				<Button primary onClick={loadMore}>
+					Load more
+				</Button>
 			</Page.ScrollableContentWithShadow>
 		</Page>
 	);

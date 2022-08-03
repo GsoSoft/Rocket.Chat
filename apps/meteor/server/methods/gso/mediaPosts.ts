@@ -82,4 +82,26 @@ Meteor.methods({
 
 		return true;
 	},
+	async getMediaPostsWithoutComment(paginationOptions, queryOptions): Promise<IMediaPost[]> {
+		check(
+			paginationOptions,
+			Match.ObjectIncluding({
+				offset: Match.Optional(Number),
+				count: Match.Optional(Number),
+			}),
+		);
+		check(
+			queryOptions,
+			Match.ObjectIncluding({
+				sort: Match.Optional(Match.Any),
+				query: Match.Optional(Object),
+			}),
+		);
+
+		const MediaPosts = new MediaPostService();
+
+		const posts = await MediaPosts.listWithoutComments(paginationOptions, queryOptions);
+
+		return posts;
+	},
 });
