@@ -14,13 +14,23 @@ import { UserPreviousPageContext } from '../../contexts/UserPreviousPageContext/
 import InstagramPost from './components/InstagramPost';
 import CreatePostModal from './components/createPostModal';
 
+export const extractFileType = (url: string): string => {
+	if (url) {
+		const fileType = url.slice(url.length - 3);
+		if (fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg') {
+			return 'image';
+		}
+		return 'video';
+	}
+	return '';
+};
+
 const InstagramClone = (): ReactElement => {
-	const [posts, setPosts] = useState<Record<string, any>[]>([]);
 	const [createdPost, setCreatedPost] = useState(false);
 	const t = useTranslation();
 	const [openModal, setOpenModal] = useState(false);
 	const { value } = useContext(UserPreviousPageContext);
-	const { numberOfResults } = useContext(InstagramPageGlobalContext);
+	const { numberOfResults, results, clickedPostId } = useContext(InstagramPageGlobalContext);
 	const { dispatch } = useContext(DispatchInstagramPageContext);
 
 	const handleRouteBack = (): void => {
@@ -28,12 +38,10 @@ const InstagramClone = (): ReactElement => {
 	};
 
 	useEffect(() => {
-		if (!posts.length || createdPost || numberOfResults > 10) {
+		if (!results.length || createdPost || numberOfResults > 10) {
 			Meteor.call('getMediaPostsWithoutComment', { offset: 1, count: numberOfResults }, {}, (error, result) => {
-				console.log(numberOfResults);
 				if (result.length) {
-					console.log(result);
-					setPosts(result);
+					dispatch({ type: 'ADD_POSTS', payload: { results: result } });
 					setCreatedPost(false);
 				}
 				if (error) {
@@ -41,18 +49,15 @@ const InstagramClone = (): ReactElement => {
 				}
 			});
 		}
-	}, [posts.length, createdPost, numberOfResults]);
 
-	const extractFileType = (url: string): string => {
-		if (url) {
-			const fileType = url.slice(url.length - 3);
-			if (fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg') {
-				return 'image';
+		if (clickedPostId) {
+			const clickedPost = document.querySelector(`#${clickedPostId}`);
+			if (clickedPost) {
+				clickedPost.scrollIntoView();
 			}
-			return 'video';
 		}
-		return '';
-	};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [results.length, createdPost, numberOfResults, clickedPostId]);
 
 	const loadMore = (): void => {
 		dispatch({ type: 'LOAD_MORE', payload: { numberOfResults: numberOfResults + 10 } });
@@ -63,8 +68,8 @@ const InstagramClone = (): ReactElement => {
 			<ProfileHeader title={t('gso_instagramView_title')} handleRouteBack={handleRouteBack} page='instagram' openModal={setOpenModal} />
 			<Page.ScrollableContentWithShadow>
 				{openModal ? <CreatePostModal setOpenModal={setOpenModal} setCreatedPost={setCreatedPost} /> : null}
-				{posts.length
-					? posts.map((post, index) => (
+				{results.length
+					? results.map((post, index) => (
 							<div key={index}>
 								<InstagramPost
 									post={post}

@@ -1,59 +1,117 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { InputBox, Icon, Box, Button } from '@rocket.chat/fuselage';
 import { useTranslation } from '@rocket.chat/ui-contexts';
+import { result } from 'lodash';
 // @ts-ignore
 import { FlowRouter } from 'meteor/kadira:flow-router';
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement, useContext, useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 
 import Page from '../../../components/Page';
 import ProfileHeader from '../../../components/ProfileHeader/ProfileHeader';
+import { DispatchInstagramPageContext, InstagramPageGlobalContext } from '../../../contexts/InstagramPageContext/GlobalState';
 import { UserPreviousPageContext } from '../../../contexts/UserPreviousPageContext/GlobalState';
+import { extractFileType } from '../InstagramCloneView';
 
 const ListingPage = (): ReactElement => {
 	const t = useTranslation();
 	const { value } = useContext(UserPreviousPageContext);
+	const { numberOfResults, results, extractedImages } = useContext(InstagramPageGlobalContext);
+	const { dispatch } = useContext(DispatchInstagramPageContext);
 
 	const handleRouteBack = (): void => {
 		FlowRouter.go(`${value.location}`);
 	};
 
-	const images: Record<string, any>[] = [
-		{ img: '/images/blog_images/Kimetsu_no_yaiba_1.jpg' },
-		{ img: '/images/blog_images/Kimetsu_no_yaiba_2.jpg' },
-		{ img: '/images/blog_images/Kimetsu_no_yaiba_3.png' },
-		{ img: '/images/blog_images/Kimetsu_no_yaiba_4.jpg' },
-		{ img: '/images/blog_images/Kimetsu_no_yaiba_5.png' },
-		{ img: '/images/blog_images/Kimetsu_no_yaiba_6.jpg' },
-		{ img: '/images/blog_images/Kimetsu_no_yaiba_7.png' },
-		{ img: '/images/blog_images/Kimetsu_no_yaiba_9.jpg' },
-	];
+	useEffect(() => {
+		if (!results.length || numberOfResults > 10) {
+			Meteor.call('getMediaPostsWithoutComment', { offset: 1, count: numberOfResults }, {}, (error, result) => {
+				if (result.length) {
+					dispatch({ type: 'ADD_POSTS', payload: { results: result } });
+				}
+				if (error) {
+					console.log(error);
+				}
+			});
+		}
+
+		if (results.length) {
+			extractImages();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [results.length, numberOfResults, dispatch]);
+
+	const extractImages = (): void => {
+		const imageList: Record<string, any>[] = [];
+		results.map((post, index) => {
+			// @ts-ignore
+			imageList.push(post.images[0]);
+			if (index === result.length - 1) {
+				dispatch({ type: 'ADD_EXTRACTED_IMAGES', payload: { extractedImages: imageList } });
+			}
+			return null;
+		});
+	};
+
+	const routeToInstagramPosts = (id: string): void => {
+		dispatch({ type: 'ADD_CLICKED_POST', payload: { clickedPostId: id } });
+		FlowRouter.go('/instagram');
+	};
+
+	const loadMore = (): void => {
+		dispatch({ type: 'LOAD_MORE', payload: { numberOfResults: numberOfResults + 10 } });
+	};
+
 	return (
 		<Page id='instagram-listing-page'>
 			{/* @ts-ignore */}
 			<ProfileHeader title={t('gso_listingPageView_title')} handleRouteBack={handleRouteBack} />
-			<Page>
+			<Page.ScrollableContent>
 				<Box display='flex' alignItems='center' style={{ margin: '15px' }}>
 					<Icon name='magnifier' size='x20' style={{ paddingRight: '8px' }} />
 					<InputBox type='text' placeholder='Search...' style={{ padding: '20px' }} onChange={(): void => {}} />
 				</Box>
 				<Container>
 					<Row>
-						{images.map((item, index) => (
-							<Col xs={4} style={{ padding: '0px', position: 'relative' }} key={index}>
-								<Icon name='copy' size='x20' style={{ position: 'absolute', left: '80%', top: '5px', background: '#fff' }} />
-								<img src={item.img} style={{ height: '130px' }} alt='listing-image-1' />
-							</Col>
-						))}
+						{extractedImages.length
+							? extractedImages.map((item: Record<string, any>, index) => (
+									<Col
+										xs={4}
+										style={{ padding: '0px', position: 'relative', cursor: 'pointer' }}
+										key={index}
+										onClick={(): void => routeToInstagramPosts(item.id)}
+									>
+										<Icon
+											name={extractFileType(item.url) === 'image' ? 'copy' : 'play-solid'}
+											size='x20'
+											style={{
+												position: 'absolute',
+												left: '80%',
+												top: '5px',
+												background: extractFileType(item.url) === 'image' ? '#fff' : 'transparent',
+												color: extractFileType(item.url) === 'image' ? '#333' : '#fff',
+											}}
+										/>
+										<img
+											src={extractFileType(item.url) === 'image' ? item.url : 'https://source.unsplash.com/2l0CWTpcChI/300x300/'}
+											style={{ height: '130px' }}
+											alt='listing-image-1'
+										/>
+									</Col>
+							  ))
+							: 'Loading...'}
 					</Row>
 				</Container>
-
-				<Button primary style={{ position: 'absolute', width: '90%', bottom: '30px', left: '50%', transform: 'translateX(-50%)' }}>
-					Load more
-				</Button>
-			</Page>
+			</Page.ScrollableContent>
+			<Button
+				primary
+				style={{ position: 'absolute', width: '90%', bottom: '30px', left: '50%', transform: 'translateX(-50%)' }}
+				onClick={loadMore}
+			>
+				Load more
+			</Button>
 		</Page>
 	);
 };

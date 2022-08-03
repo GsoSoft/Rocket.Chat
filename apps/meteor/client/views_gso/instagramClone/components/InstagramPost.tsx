@@ -88,7 +88,7 @@ const InstagramPost = ({ post: { createdBy, _id, images, likes, caption }, setOp
 		setOpenModal(true);
 	};
 	return (
-		<Tile id='post' style={{ maxWidth: '473px' }}>
+		<Tile id={images[0].id} style={{ maxWidth: '473px' }}>
 			<Box display='flex' justifyContent='space-between' alignItems='center' style={{ padding: '1rem' }}>
 				<Box display='flex' alignItems='center'>
 					<Box style={{ border: '3px solid #ff3041', borderRadius: '100%', height: '55px', width: '55px' }}>
