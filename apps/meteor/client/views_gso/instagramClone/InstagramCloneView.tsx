@@ -17,7 +17,7 @@ import CreatePostModal from './components/createPostModal';
 export const extractFileType = (url: string): string => {
 	if (url) {
 		const fileType = url.slice(url.length - 3);
-		if (fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg') {
+		if (fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'webp') {
 			return 'image';
 		}
 		return 'video';
@@ -32,6 +32,7 @@ const InstagramClone = (): ReactElement => {
 	const { value } = useContext(UserPreviousPageContext);
 	const { numberOfResults, results, clickedPostId } = useContext(InstagramPageGlobalContext);
 	const { dispatch } = useContext(DispatchInstagramPageContext);
+	// const pageDispatch = useContext(DispatchInstagramPageContext);
 
 	const handleRouteBack = (): void => {
 		FlowRouter.go(`${value.location}`);
@@ -51,6 +52,7 @@ const InstagramClone = (): ReactElement => {
 		}
 
 		if (clickedPostId) {
+			console.log(clickedPostId);
 			const clickedPost = document.querySelector(`#${clickedPostId}`);
 			if (clickedPost) {
 				clickedPost.scrollIntoView();

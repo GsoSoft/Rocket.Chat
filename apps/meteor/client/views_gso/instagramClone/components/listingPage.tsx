@@ -12,17 +12,18 @@ import Row from 'react-bootstrap/Row';
 import Page from '../../../components/Page';
 import ProfileHeader from '../../../components/ProfileHeader/ProfileHeader';
 import { DispatchInstagramPageContext, InstagramPageGlobalContext } from '../../../contexts/InstagramPageContext/GlobalState';
-import { UserPreviousPageContext } from '../../../contexts/UserPreviousPageContext/GlobalState';
+import { DispatchPreviousPageContext, UserPreviousPageContext } from '../../../contexts/UserPreviousPageContext/GlobalState';
 import { extractFileType } from '../InstagramCloneView';
 
 const ListingPage = (): ReactElement => {
 	const t = useTranslation();
 	const { value } = useContext(UserPreviousPageContext);
-	const { numberOfResults, results, extractedImages } = useContext(InstagramPageGlobalContext);
+	const { numberOfResults, results, extractedImages, clickedPostId } = useContext(InstagramPageGlobalContext);
 	const { dispatch } = useContext(DispatchInstagramPageContext);
+	const pageDispatch = useContext(DispatchPreviousPageContext);
 
 	const handleRouteBack = (): void => {
-		FlowRouter.go(`${value.location}`);
+		FlowRouter.go(`/home`);
 	};
 
 	useEffect(() => {
@@ -40,8 +41,15 @@ const ListingPage = (): ReactElement => {
 		if (results.length) {
 			extractImages();
 		}
+
+		if (clickedPostId) {
+			const clickedImg = document.querySelector(`#${clickedPostId}`);
+			if (clickedImg) {
+				clickedImg.scrollIntoView();
+			}
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [results.length, numberOfResults, dispatch]);
+	}, [results.length, numberOfResults, dispatch, value]);
 
 	const extractImages = (): void => {
 		const imageList: Record<string, any>[] = [];
@@ -57,6 +65,7 @@ const ListingPage = (): ReactElement => {
 
 	const routeToInstagramPosts = (id: string): void => {
 		dispatch({ type: 'ADD_CLICKED_POST', payload: { clickedPostId: id } });
+		pageDispatch.dispatch({ type: 'ADD_LOCATION', payload: { location: '/instagram-listing-page' } });
 		FlowRouter.go('/instagram');
 	};
 
@@ -82,6 +91,7 @@ const ListingPage = (): ReactElement => {
 										style={{ padding: '0px', position: 'relative', cursor: 'pointer' }}
 										key={index}
 										onClick={(): void => routeToInstagramPosts(item.id)}
+										id={item.id}
 									>
 										<Icon
 											name={extractFileType(item.url) === 'image' ? 'copy' : 'play-solid'}
