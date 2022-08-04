@@ -10,6 +10,7 @@ import Tags from '../../../public/json_data/tags.json';
 import Page from '../../components/Page';
 import ProfileHeader from '../../components/ProfileHeader/ProfileHeader';
 import { UserPreviousPageContext } from '../../contexts/UserPreviousPageContext/GlobalState';
+import { useShowTooltip } from '../../hooks/gso/useShowTooltip';
 import './tooltip.css';
 
 const EmployerPreferencesView = (): ReactElement => {
@@ -23,6 +24,7 @@ const EmployerPreferencesView = (): ReactElement => {
 	const [checkedItems, setCheckedItems] = useState<string[]>([]);
 	const { value } = useContext(UserPreviousPageContext);
 	const t = useTranslation();
+	const showToolTip = useShowTooltip();
 
 	const createTagGroups = (): void => {
 		Meteor.call('createManyTagGroups', TagGroups.groups, (error, result) => {
@@ -157,19 +159,6 @@ const EmployerPreferencesView = (): ReactElement => {
 
 	const handleRouteBack = (): void => {
 		FlowRouter.go(`${value.location}`);
-	};
-
-	const showToolTip = (item: string): void => {
-		const element = document.querySelector(`#${item}`);
-		if (element) {
-			if (element.classList.contains('invisible')) {
-				element.classList.remove('invisible');
-				element.classList.add('visible');
-			} else {
-				element.classList.remove('visible');
-				element.classList.add('invisible');
-			}
-		}
 	};
 
 	return (

@@ -1,7 +1,7 @@
 import { Box, Icon } from '@rocket.chat/fuselage';
 import React, { ReactElement } from 'react';
 
-import { useCapitalizeAndJoin } from '../../../hooks/useCapitalization';
+import { useCapitalizeAndJoin } from '../../../hooks/gso/useCapitalization';
 import { useFormatDate } from '../../../hooks/useFormatDate';
 
 type Props = {

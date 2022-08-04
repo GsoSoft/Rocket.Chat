@@ -7,6 +7,7 @@ import { appLayout } from '../../lib/appLayout';
 import { blazePortals } from '../../lib/portals/blazePortals';
 import PageLoading from './PageLoading';
 import { useTooltipHandling } from './useTooltipHandling';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 /**
  * Layout of front end

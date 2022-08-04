@@ -48,5 +48,6 @@
 	"gso_hallOfFamePage_districtText": "Choose your district",
 	"gso_browseFreelancers_header": "Browse Freelancers",
 	"gso_fundBalanceView_title": "Your fund!",
-	"gso_instagramView_title": "Instagram"
+	"gso_instagramView_title": "Instagram",
+	"gso_listingPageView_title": "Search"
 }

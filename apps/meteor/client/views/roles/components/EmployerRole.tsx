@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { ReactElement, useContext, useState } from 'react';
 
 import { DispatchPaymentResultContext } from '../../../contexts/PaymentResultContext/GlobalState';
-import { useCapitalizeAndJoin } from '../../../hooks/useCapitalization';
+import { useCapitalizeAndJoin } from '../../../hooks/gso/useCapitalization';
 import { dispatchToastMessage } from '../../../lib/toast';
 
 type Props = {

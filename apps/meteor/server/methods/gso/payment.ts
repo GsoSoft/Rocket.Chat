@@ -59,5 +59,4 @@ Meteor.methods({
 		console.log(transaction);
 		return [];
 	},
-
 });

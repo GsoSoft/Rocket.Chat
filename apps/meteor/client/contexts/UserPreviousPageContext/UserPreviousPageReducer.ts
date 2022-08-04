@@ -1,16 +1,17 @@
 export interface IStateInterface {
-	value: { location: string };
+	value: { location: string; clickedImage: string };
 }
 
 export interface IActionInterface {
 	type: string;
 	payload?: {
-		location: string;
+		location?: string;
+		clickedImage?: string;
 	};
 }
 
 const InitialState: IStateInterface = {
-	value: { location: '' },
+	value: { location: '', clickedImage: '' },
 };
 
 const UserPreviousPageReducer = (state, action): IStateInterface => {
@@ -20,10 +21,15 @@ const UserPreviousPageReducer = (state, action): IStateInterface => {
 				...state,
 				value: action.payload,
 			};
+		case 'ADD_CLICKED_IMAGE':
+			return {
+				...state,
+				value: action.payload.clickedImage,
+			};
 		case 'CLEAR_LOCATION':
 			return {
 				...state,
-				value: { location: '' },
+				value: { location: '', clickedImage: '' },
 			};
 		default:
 			return state;
