@@ -10,7 +10,7 @@ export * from './IPurchase';
 export * from './IPaymentGateway';
 export * from './IReservation';
 export * from './ISendFund';
-export * from './ITask';
+export * from './IAchievable';
 
 export * from './IBlog';
 export * from './IComment';
