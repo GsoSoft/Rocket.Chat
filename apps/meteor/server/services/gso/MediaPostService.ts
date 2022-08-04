@@ -2,6 +2,7 @@ import { AggregationCursor, FindCursor } from 'mongodb';
 import { IMediaPost } from '@rocket.chat/core-typings/dist/gso';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { MediaPosts } from '@rocket.chat/models';
+import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
 import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
 import { IMediaPostService, IMediaPostCreateParams, IMediaPostUpdateParams } from '../../sdk/types/gso/IMediaPostService';
@@ -43,7 +44,7 @@ export class MediaPostService extends ServiceClassInternal implements IMediaPost
 		return mediaPost;
 	}
 
-	async update(mediaPostId: string, params: IMediaPostUpdateParams): Promise<void> {
+	async update(mediaPostId: string, params: IMediaPostUpdateParams): Promise<IMediaPost> {
 		await this.getMediaPost(mediaPostId);
 		const query = {
 			_id: mediaPostId,
@@ -51,11 +52,28 @@ export class MediaPostService extends ServiceClassInternal implements IMediaPost
 		const updateData = {
 			...params,
 		};
-		await MediaPosts.updateOne(query, { $set: updateData });
+		const result = await MediaPosts.updateOne(query, { $set: updateData });
+		const mediaPost = await MediaPosts.findOneById(result.upsertedId.toHexString());
+		if (!mediaPost) throw new Error('mediaPost-does-not-exist');
+		return mediaPost;
 	}
 
 	list(limit = 10): AggregationCursor<IMediaPost> | FindCursor {
 		// return MediaPosts.find({}); 12
 		return MediaPosts.getMediaPostsWithComments(limit);
+	}
+
+	async listWithoutComments(
+		{ offset, count }: Partial<IPaginationOptions> = { offset: 0, count: 50 },
+		{ sort, query }: IQueryOptions<IMediaPost> = { sort: {} },
+	): Promise<IMediaPost[]> {
+		return MediaPosts.find(
+			{ ...query },
+			{
+				...(sort && { sort }),
+				limit: count,
+				skip: offset,
+			},
+		).toArray();
 	}
 }

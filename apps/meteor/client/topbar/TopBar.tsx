@@ -72,6 +72,19 @@ const TopBar = ({ location }: Props): ReactElement => {
 								</Box>
 							),
 						},
+						instagrmListingPage: {
+							action: function noRefCheck(): void {
+								// This so as to allow the linting to pass - @typescript-eslint/no-empty-function
+								dispatch({ type: 'ADD_LOCATION', payload: { location: `/${location}` } });
+								FlowRouter.go('/instagram-listing-page');
+							},
+							label: (
+								<Box alignItems='center' display='flex'>
+									<Icon mie='x4' name='dialpad' size='x20' />
+									Instagram Listing Page
+								</Box>
+							),
+						},
 						tasks: {
 							action: function noRefCheck(): void {
 								// This so as to allow the linting to pass - @typescript-eslint/no-empty-function

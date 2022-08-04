@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Dropzone, FileItem, FileValidated } from '@dropzone-ui/react';
 import { IMediaPost } from '@rocket.chat/core-typings';
 import { Button, Field, FieldGroup, Icon, Modal, TextAreaInput } from '@rocket.chat/fuselage';
@@ -8,8 +9,8 @@ import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import { DispatchInstagramPageContext, InstagramPageGlobalContext } from '../../../contexts/InstagramPageContext/GlobalState';
 
 type Props = {
-	setOpenModal: Function;
-	setCreatedPost: Function;
+	setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+	setCreatedPost: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CreatePostModal = ({ setOpenModal, setCreatedPost }: Props): ReactElement => {
