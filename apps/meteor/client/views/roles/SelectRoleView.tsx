@@ -8,7 +8,7 @@ import React, { ReactElement, useContext, useEffect, useMemo, useState } from 'r
 import Page from '../../components/Page';
 import ProfileHeader from '../../components/ProfileHeader/ProfileHeader';
 import { UserPreviousPageContext } from '../../contexts/UserPreviousPageContext/GlobalState';
-import { useCapitalizeAndJoin } from '../../hooks/useCapitalization';
+import { useCapitalizeAndJoin } from '../../hooks/gso/useCapitalization';
 import { useEndpointData } from '../../hooks/useEndpointData';
 import Components from './components/Components';
 

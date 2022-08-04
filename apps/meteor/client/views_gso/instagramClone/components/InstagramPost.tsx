@@ -10,6 +10,7 @@ import 'swiper/swiper.min.css';
 import 'swiper/modules/pagination/pagination.min.css';
 import '../instagramCloneCss.css';
 import { DispatchInstagramPageContext } from '../../../contexts/InstagramPageContext/GlobalState';
+import { useShowTooltip } from '../../../hooks/gso/useShowTooltip';
 
 interface ICommentProps {
 	author: string;
@@ -31,18 +32,8 @@ const Comment = ({ author, content }: ICommentProps): ReactElement => (
 
 const InstagramPost = ({ post: { createdBy, _id, images, likes, caption }, setOpenModal, setCreatedPost, type }: Props): ReactElement => {
 	const { dispatch } = useContext(DispatchInstagramPageContext);
-	const showToolTip = (item: string): void => {
-		const element = document.getElementById(item);
-		if (element) {
-			if (element.classList.contains('invisible')) {
-				element.classList.remove('invisible');
-				element.classList.add('visible');
-			} else {
-				element.classList.remove('visible');
-				element.classList.add('invisible');
-			}
-		}
-	};
+	const showToolTip = useShowTooltip();
+
 	const deletePost = (postId: string): void => {
 		Meteor.call('deleteMediaPost', postId, (error, result) => {
 			if (result) {

@@ -8,7 +8,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 
 import Page from '../components/Page';
-import { useCapitalizeAndJoin } from '../hooks/useCapitalization';
+import { useCapitalizeAndJoin } from '../hooks/gso/useCapitalization';
 import SingleGame from './games/SingleGame';
 
 const FundBalanceView = (): ReactElement => {
@@ -74,9 +74,13 @@ const FundBalanceView = (): ReactElement => {
 
 			{fundBalance?.accounts.map((item, index) => (
 				<div key={index}>
-					<span><b>Currency</b> : {item.currency}</span>
+					<span>
+						<b>Currency</b> : {item.currency}
+					</span>
 					<br />
-					<span><b>available </b> :{item.availableAmount}</span>
+					<span>
+						<b>available </b> :{item.availableAmount}
+					</span>
 					<br />
 					<span>{item.lastTransaction}</span>
 					<br />
@@ -89,8 +93,7 @@ const FundBalanceView = (): ReactElement => {
 
 			<Box color='default' fontScale='p2'>
 				<h2> Exchange currency USD - GSO</h2>
-				<TextInput type='number' value={amount} onChange={(e: any): void => setAmount(e.target.value)}
-									 placeholder='Amount to exchange' />
+				<TextInput type='number' value={amount} onChange={(e: any): void => setAmount(e.target.value)} placeholder='Amount to exchange' />
 				<Button onClick={(): void => sendExchangeOrder()}>
 					<Icon size='x20' name='arrow-return' /> create Order each time amount if changed
 				</Button>

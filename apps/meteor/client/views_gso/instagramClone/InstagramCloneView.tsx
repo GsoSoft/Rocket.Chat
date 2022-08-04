@@ -32,7 +32,6 @@ const InstagramClone = (): ReactElement => {
 	const { value } = useContext(UserPreviousPageContext);
 	const { numberOfResults, results, clickedPostId } = useContext(InstagramPageGlobalContext);
 	const { dispatch } = useContext(DispatchInstagramPageContext);
-	// const pageDispatch = useContext(DispatchInstagramPageContext);
 
 	const handleRouteBack = (): void => {
 		FlowRouter.go(`${value.location}`);
@@ -52,7 +51,6 @@ const InstagramClone = (): ReactElement => {
 		}
 
 		if (clickedPostId) {
-			console.log(clickedPostId);
 			const clickedPost = document.querySelector(`#${clickedPostId}`);
 			if (clickedPost) {
 				clickedPost.scrollIntoView();
