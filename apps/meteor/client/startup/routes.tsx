@@ -1,9 +1,7 @@
 import type { IUser } from '@rocket.chat/core-typings';
 import { Accounts } from 'meteor/accounts-base';
-// @ts-ignore
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Meteor } from 'meteor/meteor';
-// @ts-ignore
 import { TAPi18n } from 'meteor/rocketchat:tap-i18n';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
@@ -100,9 +98,6 @@ FlowRouter.route('/home', {
 
 	action(_params, queryParams) {
 		KonchatNotification.getDesktopPermission();
-		// const LandingViewPage = createTemplateForComponent('LandingViewPage', () => import('../views/landing/LandingView'), {
-		// 	attachment: 'at-parent',
-		// });
 		if (queryParams?.saml_idp_credentialToken !== undefined) {
 			const token = queryParams.saml_idp_credentialToken;
 			FlowRouter.setQueryParams({
@@ -116,7 +111,12 @@ FlowRouter.route('/home', {
 						handleError(error);
 					}
 				}
-				// appLayout.renderMainLayout({ center: LandingViewPage });
+				// appLayout.render(
+				// 		<MainLayout>
+				// 			<BlazeTemplate template={'HomePage'} />
+				// 		</MainLayout>,
+				// 	);
+				// });
 				appLayout.render(
 					<MainLayout>
 						<LandingViewPage />
@@ -191,7 +191,6 @@ FlowRouter.route('/legal-notice', {
 
 FlowRouter.route('/room-not-found/:type/:name', {
 	name: 'room-not-found',
-	// @ts-ignore
 	action: ({ type, name } = {}) => {
 		Session.set('roomNotFound', { type, name });
 		appLayout.render(
