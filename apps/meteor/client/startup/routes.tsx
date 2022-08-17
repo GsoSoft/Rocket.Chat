@@ -119,7 +119,8 @@ FlowRouter.route('/home', {
 				// });
 				appLayout.render(
 					<MainLayout>
-						<LandingViewPage />
+						<BlazeTemplate template={'HomePage'} />
+						{/* <LandingViewPage />*/}
 					</MainLayout>,
 				);
 			});
@@ -129,7 +130,8 @@ FlowRouter.route('/home', {
 
 		appLayout.render(
 			<MainLayout>
-				<LandingViewPage />
+				<BlazeTemplate template={'HomePage'} />
+				{/* <LandingViewPage />*/}
 			</MainLayout>,
 		);
 	},

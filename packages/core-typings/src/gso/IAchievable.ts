@@ -31,8 +31,12 @@ export interface IAchievable extends IRocketChatRecord {
 	reward: number;
 }
 
+/**
+ * Dopamine causes that little happy feeling when someone likes your post on Instagram, fill in a checkbox, or complete a small task.
+ *
+ */
 export interface ITask extends IAchievable {
-	type: 'daily' | 'longterm';
+	type: 'daily' | 'weekly' | 'monthly';
 	sortOrder: number;
 	status: -1 | 0 | 1;
 	/**
@@ -46,6 +50,21 @@ export interface ITask extends IAchievable {
 }
 
 /**
+ * Tasks from event campaign.
+ * Oxytocin: The “love” hormone, gives you a rush of pleasure from affection and connection.
+ */
+export interface IEventTask extends IAchievable {
+	type: 'event';
+	sortOrder: number;
+	status: -1 | 0 | 1;
+}
+
+/**
+ * Serotonin is another social chemical, but it functions in an entirely different way.
+ * Serotonin plays a role in the dynamics of pride, loyalty, and status. When we feel a sense of accomplishment or recognition from others, we are experiencing the effects of serotonin.
+ * This could be from receiving your diploma, crossing the finish line in a race, or being appreciated for hard work in the office.
+ * Serotonin can create strong, positive emotions.
+ *
  * a.k.a : Achievement , badge, etc
  * https://reddit.fandom.com/wiki/Trophy
  * https://stackoverflow.com/help/badges
@@ -64,4 +83,3 @@ export interface ITrophy extends IAchievable {
 	uiRoute: string;
 	icon: string;
 }
-
