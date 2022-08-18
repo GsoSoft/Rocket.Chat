@@ -1,6 +1,7 @@
+import { IUser, AvatarObject } from '@rocket.chat/core-typings';
 import { Box, Button, TextInput, Margins, Avatar, IconButton } from '@rocket.chat/fuselage';
 import { useToastMessageDispatch, useSetting, useTranslation } from '@rocket.chat/ui-contexts';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, ReactElement, ChangeEvent } from 'react';
 
 import { useFileInput } from '../../../hooks/useFileInput';
 import { useFormatDate } from '../../../hooks/useFormatDate';
@@ -8,22 +9,36 @@ import { useTimeAgo } from '../../../hooks/useTimeAgo';
 import UserAvatar from '../UserAvatar';
 import UserAvatarSuggestions from './UserAvatarSuggestions';
 
-function UserAvatarEditor({ currentUsername, username, setAvatarObj, suggestions, disabled, etag }) {
+const toDataURL = (file: File, callback: (result: FileReader['result']) => void): void => {
+	const reader = new FileReader();
+	reader.onloadend = function (e): void {
+		callback(e?.target?.result || null);
+	};
+	reader.readAsDataURL(file);
+};
+
+type AvatarSuggestion = {
+	service: string;
+	url: string;
+};
+
+type UserAvatarEditorType = {
+	currentUsername: IUser['username'];
+	username: IUser['username'];
+	setAvatarObj: (obj: AvatarObject) => void;
+	suggestions: AvatarSuggestion[] | undefined;
+	disabled: boolean;
+	etag: IUser['avatarETag'];
+};
+
+function UserAvatarEditor({ currentUsername, username, setAvatarObj, suggestions, disabled, etag }: UserAvatarEditorType): ReactElement {
 	const t = useTranslation();
 	const timeAgo = useTimeAgo();
 	const formatDate = useFormatDate();
 	const rotateImages = useSetting('FileUpload_RotateImages');
 	const [avatarFromUrl, setAvatarFromUrl] = useState('');
-	const [newAvatarSource, setNewAvatarSource] = useState();
-	const [urlEmpty, setUrlEmpty] = useState(true);
+	const [newAvatarSource, setNewAvatarSource] = useState<string>();
 	const dispatchToastMessage = useToastMessageDispatch();
-	const toDataURL = (file, callback) => {
-		const reader = new FileReader();
-		reader.onload = function (e) {
-			callback(e.target.result);
-		};
-		reader.readAsDataURL(file);
-	};
 
 	// Refetch user data so that we can get createdAt field.
 	const { value: data } = useEndpointData(
@@ -38,34 +53,34 @@ function UserAvatarEditor({ currentUsername, username, setAvatarObj, suggestions
 
 	const setUploadedPreview = useCallback(
 		async (file, avatarObj) => {
-			if (file.type.startsWith('image/')) {
-				setAvatarObj(avatarObj);
-				toDataURL(file, (dataurl) => {
-					setNewAvatarSource(dataurl);
-				});
-			} else dispatchToastMessage({ type: 'error', message: t('Avatar_format_invalid') });
+			setAvatarObj(avatarObj);
+			toDataURL(file, async (dataURL) => {
+				if (typeof dataURL === 'string' && (await isValidImageFormat(dataURL))) {
+					setNewAvatarSource(dataURL);
+					return;
+				}
+
+				dispatchToastMessage({ type: 'error', message: t('Avatar_format_invalid') });
+			});
 		},
 		[setAvatarObj, t, dispatchToastMessage],
 	);
 
 	const [clickUpload] = useFileInput(setUploadedPreview);
 
-	const clickUrl = () => {
-		if (avatarFromUrl === '') {
-			return;
-		}
+	const clickUrl = (): void => {
 		setNewAvatarSource(avatarFromUrl);
 		setAvatarObj({ avatarUrl: avatarFromUrl });
 	};
-	const clickReset = () => {
+
+	const clickReset = (): void => {
 		setNewAvatarSource(`/avatar/%40${username}`);
 		setAvatarObj('reset');
 	};
 
 	const url = newAvatarSource;
 
-	const handleAvatarFromUrlChange = (event) => {
-		event.currentTarget.value !== '' ? setUrlEmpty(false) : setUrlEmpty(true);
+	const handleAvatarFromUrlChange = (event: ChangeEvent<HTMLInputElement>): void => {
 		setAvatarFromUrl(event.currentTarget.value);
 	};
 
@@ -76,7 +91,7 @@ function UserAvatarEditor({ currentUsername, username, setAvatarObj, suggestions
 				<UserAvatar
 					size='x124'
 					url={url}
-					username={currentUsername}
+					username={currentUsername || ''}
 					etag={etag}
 					style={{
 						objectFit: 'contain',
@@ -96,8 +111,8 @@ function UserAvatarEditor({ currentUsername, username, setAvatarObj, suggestions
 								icon='permalink'
 								secondary
 								onClick={clickUrl}
-								disabled={disabled || urlEmpty}
-								title={t('Add URL')}
+								disabled={disabled || !avatarFromUrl}
+								title={t('Add_URL')}
 							/>
 							{suggestions && (
 								<UserAvatarSuggestions
