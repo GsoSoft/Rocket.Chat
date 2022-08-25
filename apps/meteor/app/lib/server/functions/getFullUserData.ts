@@ -20,6 +20,7 @@ const defaultFields = {
 	statusText: 1,
 	avatarETag: 1,
 	extension: 1,
+	federated: 1,
 	trustScore: 1,
 	credit: 1,
 	consecutiveLogins: 1,
