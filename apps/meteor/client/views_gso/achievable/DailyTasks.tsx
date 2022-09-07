@@ -43,21 +43,11 @@ const DailyTasks = (): ReactElement => {
 
 	useEffect(() => {
 		if (!expiringTasks.length || !upcomingTasks.length || !completedTasks) {
-			Meteor.call('getTasks', { offset: 1, count: 10 }, {}, (error, result) => {
-				if (result) {
-					if (result.length) {
-						setTasks(result);
-					} else {
-						Meteor.call('seed', (error, result) => {
-							if (result.length) {
-								setTasks(result);
-							}
-
-							if (error) {
-								console.log(error, 'error');
-							}
-						});
-					}
+			Meteor.call('syncAchievables', { offset: 1, count: 10 }, { types: ['daily', 'weekly', 'monthly'] }, (error, result) => {
+				if (result && result.length) {
+					setTasks(result);
+				} else {
+					console.log(result, 'empty');
 				}
 
 				if (error) {
@@ -77,7 +67,11 @@ const DailyTasks = (): ReactElement => {
 				if (index === tasks.length - 1) {
 					dispatch({
 						type: 'ADD_TASKS',
-						payload: { expiringTasks: newExpiringTasks, upcomingTasks: newUpComingTasks, completedTasks: newCompletedTasks },
+						payload: {
+							expiringTasks: newExpiringTasks,
+							upcomingTasks: newUpComingTasks,
+							completedTasks: newCompletedTasks,
+						},
 					});
 				}
 

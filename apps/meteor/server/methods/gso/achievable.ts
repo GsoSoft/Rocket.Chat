@@ -57,6 +57,48 @@ Meteor.methods({
 		return task;
 	},
 
+	/**
+	 * The main feature of this module. Tasks are composed of 2 part
+	 * 1/ List of daily task @ITask
+	 * 2/ List of weekly task
+	 * 3/ List of monthly task
+	 * 4/ list of trophy/achievement/longterm
+	 * This function
+	 * 1/ clear expired/finished tasks
+	 * 2/ create new tasks
+	 * 3/ return
+	 *
+	 * @param paginationOptions
+	 * @param queryOptions
+	 */
+	async syncAchievables(paginationOptions, queryOptions) {
+		check(
+			paginationOptions,
+			Match.ObjectIncluding({
+				offset: Match.Optional(Number),
+				count: Match.Optional(Number),
+			}),
+		);
+		check(
+			queryOptions,
+			Match.ObjectIncluding({
+				sort: Match.Optional(Object),
+				query: Match.Optional(Object),
+			}),
+		);
+
+		// const Tasks = new TaskService();
+
+		const results = ''; // await Tasks.list(paginationOptions, queryOptions).toArray();
+
+		return results;
+	},
+
+	/**
+	 * get
+	 * @param paginationOptions
+	 * @param queryOptions
+	 */
 	async getTasks(paginationOptions, queryOptions) {
 		check(
 			paginationOptions,

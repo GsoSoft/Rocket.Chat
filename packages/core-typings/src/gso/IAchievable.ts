@@ -1,11 +1,28 @@
 import type { IRocketChatRecord } from '../IRocketChatRecord';
 
+export enum IAchievableStatus {
+	EXPIRED = 'EXPIRED',
+	FAILED = 'FAILED',
+	ACTIVE = 'ACTIVE', // created
+	COMPLETED = 'COMPLETED ',
+}
+
+// export enum IAchievableType {
+// 	DAILY = 'EXPIRED',
+// 	FAILED = 'FAILED',
+// 	ACTIVE = 'ACTIVE', // created
+// 	COMPLETED = 'COMPLETED ',
+// }
+
+/**
+ * A thing (task, trophy) that use can achieve by doing something!
+ */
 export interface IAchievable extends IRocketChatRecord {
 	/**
 	 * this code will be used by client side for description multi-language.
-	 * For ex : USD, JPY, VND, etc...
+	 * For ex : achievable_daily_poke_friend, etc...
 	 * correspondingly : english lang data can be:
-	 *   "gso_currency_USD_desc": "This is United State Dollar, bla bla...",
+	 *   "gso_achievable_daily_poke_friend": "Poke a friend daily to get reward...",
 	 *
 	 */
 	code: string;
@@ -27,7 +44,7 @@ export interface IAchievable extends IRocketChatRecord {
 	/**
 	 * created/failed/etc...
 	 */
-	status: any;
+	status: IAchievableStatus;
 	reward: number;
 }
 
@@ -38,7 +55,6 @@ export interface IAchievable extends IRocketChatRecord {
 export interface ITask extends IAchievable {
 	type: 'daily' | 'weekly' | 'monthly';
 	sortOrder: number;
-	status: -1 | 0 | 1;
 	/**
 	 * usually Item
 	 */
@@ -50,13 +66,22 @@ export interface ITask extends IAchievable {
 }
 
 /**
+ * "to do" Tasks
+ * Can be assigned by system or another member or self.
+ * Oxytocin: The “love” hormone, gives you a rush of pleasure from affection and connection.
+ */
+export interface ITodo extends IAchievable {
+	type: 'todo';
+	sortOrder: number;
+}
+
+/**
  * Tasks from event campaign.
  * Oxytocin: The “love” hormone, gives you a rush of pleasure from affection and connection.
  */
 export interface IEventTask extends IAchievable {
 	type: 'event';
 	sortOrder: number;
-	status: -1 | 0 | 1;
 }
 
 /**
@@ -70,9 +95,8 @@ export interface IEventTask extends IAchievable {
  * https://stackoverflow.com/help/badges
  */
 export interface ITrophy extends IAchievable {
-	type: 'achievements';
+	type: 'achievements'; // well
 	sortOrder: number;
-	status: -1 | 0 | 1;
 	/**
 	 * usually Item from inventory
 	 */
