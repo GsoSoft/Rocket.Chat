@@ -14,6 +14,8 @@ import { dispatchToastMessage } from '../lib/toast';
 import BlazeTemplate from '../views/root/BlazeTemplate';
 import MainLayout from '../views/root/MainLayout';
 
+const PageLoading = lazy(() => import('../views/root/PageLoading'));
+const HomePage = lazy(() => import('../views/home/HomePage'));
 const InvitePage = lazy(() => import('../views/invite/InvitePage'));
 const SecretURLPage = lazy(() => import('../views/invite/SecretURLPage'));
 const CMSPage = lazy(() => import('../views/root/CMSPage'));
@@ -34,7 +36,7 @@ FlowRouter.route('/', {
 	action() {
 		appLayout.render(
 			<MainLayout>
-				<BlazeTemplate template='loading' />
+				<PageLoading />
 			</MainLayout>,
 		);
 
@@ -106,16 +108,10 @@ FlowRouter.route('/home', {
 				if (error) {
 					dispatchToastMessage({ type: 'error', message: error });
 				}
-				// appLayout.render(
-				// 		<MainLayout>
-				// 			<BlazeTemplate template={'HomePage'} />
-				// 		</MainLayout>,
-				// 	);
-				// });
+
 				appLayout.render(
 					<MainLayout>
-						<BlazeTemplate template={'HomePage'} />
-						{/* <LandingViewPage />*/}
+						<HomePage />
 					</MainLayout>,
 				);
 			});
@@ -125,8 +121,7 @@ FlowRouter.route('/home', {
 
 		appLayout.render(
 			<MainLayout>
-				<BlazeTemplate template={'HomePage'} />
-				{/* <LandingViewPage />*/}
+				<HomePage />
 			</MainLayout>,
 		);
 	},
@@ -183,18 +178,6 @@ FlowRouter.route('/legal-notice', {
 	name: 'legal-notice',
 	action: () => {
 		appLayout.render(<CMSPage page='Layout_Legal_Notice' />);
-	},
-});
-
-FlowRouter.route('/room-not-found/:type/:name', {
-	name: 'room-not-found',
-	action: ({ type, name } = {}) => {
-		Session.set('roomNotFound', { type, name });
-		appLayout.render(
-			<MainLayout>
-				<BlazeTemplate template='roomNotFound' />
-			</MainLayout>,
-		);
 	},
 });
 
