@@ -13,9 +13,9 @@
 		"chat"
 	],
 	"scripts": {
-	    "start": "meteor",
-	    "build:ci": "METEOR_DISABLE_OPTIMISTIC_CACHING=1 meteor build --server-only",
-	    "dev": "meteor --exclude-archs \"web.browser.legacy, web.cordova\"",
+		"start": "meteor",
+		"build:ci": "METEOR_DISABLE_OPTIMISTIC_CACHING=1 meteor build --server-only",
+		"dev": "meteor --exclude-archs \"web.browser.legacy, web.cordova\"",
 		"dsv": "meteor --exclude-archs \"web.browser.legacy, web.cordova\"",
 		"ha": "meteor npm run ha:start",
 		"ha:start": "ts-node .scripts/run-ha.ts main",
@@ -350,7 +350,7 @@
 		"queue-fifo": "^0.2.6",
 		"rc-scrollbars": "^1.1.5",
 		"react": "~17.0.2",
-	    "react-aria": "^3.19.0",
+		"react-aria": "^3.19.0",
 		"react-bootstrap": "^2.4.0",
 		"react-device-detect": "^2.2.2",
 		"react-dom": "~17.0.2",
