@@ -4,6 +4,7 @@ import React, { memo, ReactElement } from 'react';
 
 import { useSidebarPaletteColor } from '../hooks/useSidebarPaletteColor';
 import UserAvatarButton from './UserAvatarButton';
+import Administration from './actions/Administration';
 import CreateRoom from './actions/CreateRoom';
 import Directory from './actions/Directory';
 import Home from './actions/Home';
@@ -29,6 +30,7 @@ const HeaderWithData = (): ReactElement => {
 							<Directory title={t('Directory')} />
 							<Sort title={t('Display')} />
 							<CreateRoom title={t('Create_new')} data-qa='sidebar-create' />
+							<Administration title={t('Administration')} />
 						</>
 					)}
 					<Sidebar.TopBar.Action icon='circle-cross' onClick={(): void => sidebar.toggle()} />
