@@ -6,7 +6,7 @@ export * from './GatewayService';
 export * from './ProductService';
 export * from './TagGroupService';
 export * from './TagService';
-export * from './TaskService';
+export * from './AchievableService';
 export * from './FundService';
 export * from './fake';
 export * from './MediaPostService';

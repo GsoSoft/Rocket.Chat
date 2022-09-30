@@ -23,7 +23,7 @@ const EscrowHistoryViewPage = lazy(() => import('../views_gso/escrowHistory/escr
 const BlogDetailPageView = lazy(() => import('../views_gso/blog/BlogDetail'));
 const GameDetailPageView = lazy(() => import('../views_gso/games/SingleGameDetails'));
 const ProductDetailPageView = lazy(() => import('../views_gso/products/SIngleProductDetails'));
-const DailyTasksPageView = lazy(() => import('../views_gso/achievable/DailyTasks'));
+const AchievablesPageView = lazy(() => import('../views_gso/achievable/Achievables'));
 
 // New Routes for GSO app
 
@@ -175,7 +175,7 @@ FlowRouter.route('/daily-tasks', {
 	action: () => {
 		appLayout.render(
 			<MainLayout>
-				<DailyTasksPageView />
+				<AchievablesPageView />
 			</MainLayout>,
 		);
 	},

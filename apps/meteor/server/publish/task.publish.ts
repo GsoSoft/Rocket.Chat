@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 
-import { TaskService } from '../services/gso';
+import { AchievableService } from '../services/gso';
 
 if (Meteor.isServer) {
-	const Tasks = new TaskService();
+	const Tasks = new AchievableService();
 
 	Meteor.publish('tasks.getList', function (paginationOptions, queryOptions) {
 		check(

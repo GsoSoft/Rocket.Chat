@@ -48,13 +48,13 @@ Meteor.methods({
 
 	async getBlogs(limit?: number): Promise<IBlog[]> {
 		check(limit, Match.Optional(Number));
-		console.log('getBlogs begin  ', limit);
+		// console.log('getBlogs begin  ', limit);
 
 		const Blogs = new BlogService();
 
 		// const result = await Blogs.list(limit).toArray();
 		const result = await Blogs.list(limit).toArray();
-		console.log('getBlogs result ', result);
+		// console.log('getBlogs result ', result);
 
 		return result;
 	},

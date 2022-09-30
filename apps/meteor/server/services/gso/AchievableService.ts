@@ -2,12 +2,12 @@ import { Cursor } from 'mongodb';
 import { ITask } from '@rocket.chat/core-typings/dist/gso';
 import { Tasks } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
-import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
+import { IAchievable, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
 import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
-import { ITaskService, ITaskCreateParams, ITaskUpdateParams } from '../../sdk/types/ITaskService';
+import { IAchievableService, ITaskCreateParams, ITaskUpdateParams } from '../../sdk/types/gso/IAchievableService';
 
-export class TaskService extends ServiceClassInternal implements ITaskService {
+export class AchievableService extends ServiceClassInternal implements IAchievableService {
 	protected name = 'task';
 
 	async create(params: ITaskCreateParams): Promise<ITask> {
@@ -25,7 +25,7 @@ export class TaskService extends ServiceClassInternal implements ITaskService {
 	}
 
 	async createMany(tasks: ITaskCreateParams[]): Promise<void> {
-		const data: InsertionModel<ITask>[] = tasks.map((task) => ({
+		const data: InsertionModel<IAchievable>[] = tasks.map((task) => ({
 			...task,
 			...(task.sortOrder ? { sortOrder: task.sortOrder } : { sortOrder: 0 }),
 			startDate: new Date(),
@@ -64,8 +64,15 @@ export class TaskService extends ServiceClassInternal implements ITaskService {
 
 	list(
 		{ offset, count }: Partial<IPaginationOptions> = { offset: 0, count: 50 },
-		{ sort, query }: IQueryOptions<ITask> = { sort: { endDate: 1, sortOrder: -1 } },
-	): Cursor<ITask> {
+		{ sort, query }: IQueryOptions<IAchievable> = { sort: { endDate: 1, sortOrder: -1 } },
+	): Cursor<IAchievable> {
+		// !!!broadcast an event to dedicated taskManager class such as :
+		// 1. event
+		// 2. daily/weekly/monthly task
+		// 3. todo
+		// 4. trophy
+		let result: Array<IAchievable>  = [];
+		result = result.concat(this.getDailyTask());
 		return Tasks.find(
 			{ ...query },
 			{
@@ -74,5 +81,16 @@ export class TaskService extends ServiceClassInternal implements ITaskService {
 				skip: offset,
 			},
 		);
+	}
+
+	/**
+	 * temp !!!
+	 * create or return list of today task
+	 *
+	 * @private
+	 */
+	private getDailyTask() {
+
+		return undefined;
 	}
 }

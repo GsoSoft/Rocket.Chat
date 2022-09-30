@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 import { Tasks } from '@rocket.chat/models';
 
-import { sampleTasks, TaskService } from '../../services/gso';
-import { ITaskCreateParams } from '../../sdk/types/ITaskService';
+import { sampleTasks, AchievableService } from '../../services/gso';
+import { ITaskCreateParams } from '../../sdk/types/gso/IAchievableService';
 
 Meteor.methods({
 	async seed() {
@@ -25,7 +25,7 @@ Meteor.methods({
 			}),
 		);
 
-		const Tasks = new TaskService();
+		const Tasks = new AchievableService();
 
 		const task = await Tasks.create(params);
 
@@ -33,14 +33,14 @@ Meteor.methods({
 	},
 
 	async createManyTasks(tasks: ITaskCreateParams[]): Promise<void> {
-		const Tasks = new TaskService();
+		const Tasks = new AchievableService();
 		await Tasks.createMany(tasks);
 	},
 
 	async deleteTask(taskId) {
 		check(taskId, String);
 
-		const Tasks = new TaskService();
+		const Tasks = new AchievableService();
 
 		await Tasks.delete(taskId);
 
@@ -50,7 +50,7 @@ Meteor.methods({
 	async getOneTask(taskId) {
 		check(taskId, String);
 
-		const Tasks = new TaskService();
+		const Tasks = new AchievableService();
 
 		const task = await Tasks.getTask(taskId);
 
@@ -82,14 +82,16 @@ Meteor.methods({
 		check(
 			queryOptions,
 			Match.ObjectIncluding({
+				types: Match.Optional(Array),
 				sort: Match.Optional(Object),
 				query: Match.Optional(Object),
 			}),
 		);
 
-		// const Tasks = new TaskService();
+		console.log(paginationOptions, queryOptions);
+		const service = new AchievableService();
 
-		const results = ''; // await Tasks.list(paginationOptions, queryOptions).toArray();
+		const results = await service.list(paginationOptions, queryOptions).toArray();
 
 		return results;
 	},
@@ -138,7 +140,7 @@ Meteor.methods({
 			}),
 		);
 
-		const Tasks = new TaskService();
+		const Tasks = new AchievableService();
 
 		const task = await Tasks.update(taskId, params);
 

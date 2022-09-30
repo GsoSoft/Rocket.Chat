@@ -6,6 +6,6 @@ export * from './Gateways';
 export * from './Products';
 export * from './TagGroups';
 export * from './Tags';
-export * from './Tasks';
+export * from './Achievables';
 export * from './Transactions';
 export * from './MediaPosts';

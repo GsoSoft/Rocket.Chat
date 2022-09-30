@@ -9,6 +9,6 @@ export * from './IPaymentGatewaysModel';
 export * from './IProductsModel';
 export * from './ITagGroupsModel';
 export * from './ITagsModel';
-export * from './ITasksModel';
+export * from './IAchievablesModel';
 export * from './ITransactionModel';
 export * from './IMediaPostModel';
