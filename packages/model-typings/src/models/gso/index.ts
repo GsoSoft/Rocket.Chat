@@ -1,3 +1,4 @@
+export * from './IAchievablesModel';
 export * from './IBlogsModel';
 export * from './ICommentsModel';
 export * from './IEscrowsModel';
@@ -9,6 +10,5 @@ export * from './IPaymentGatewaysModel';
 export * from './IProductsModel';
 export * from './ITagGroupsModel';
 export * from './ITagsModel';
-export * from './IAchievablesModel';
 export * from './ITransactionModel';
 export * from './IMediaPostModel';

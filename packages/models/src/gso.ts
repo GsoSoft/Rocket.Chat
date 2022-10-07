@@ -8,7 +8,7 @@ import type {
 	IProductsModel,
 	ITagGroupsModel,
 	ITagsModel,
-	ITasksModel,
+	IAchievablesModel,
 	ITransactionsModel,
 	IFundBalancesModel,
 	IMediaPostsModel,
@@ -25,7 +25,7 @@ export const Gateways = proxify<IGatewaysModel>('IGatewaysModel');
 export const Products = proxify<IProductsModel>('IProductsModel');
 export const TagGroups = proxify<ITagGroupsModel>('ITagGroupsModel');
 export const Tags = proxify<ITagsModel>('ITagsModel');
-export const Tasks = proxify<ITasksModel>('ITasksModel');
+export const Achievables = proxify<IAchievablesModel>('IAchievablesModel');
 export const Transactions = proxify<ITransactionsModel>('ITransactionsModel');
 export const PaymentGateways = proxify<IPaymentGatewaysModel>('IPaymentGatewaysModel');
 export const MediaPosts = proxify<IMediaPostsModel>('IMediaPostsModel');

@@ -1,6 +1,6 @@
 import { Cursor } from 'mongodb';
 import { ITask } from '@rocket.chat/core-typings/dist/gso';
-import { Tasks } from '@rocket.chat/models';
+import { Achievables } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { IAchievable, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
@@ -18,8 +18,8 @@ export class AchievableService extends ServiceClassInternal implements IAchievab
 			assignedBy: '',
 			assignedTo: '',
 		};
-		const result = await Tasks.insertOne(createData);
-		const task = await Tasks.findOneById(result.insertedId);
+		const result = await Achievables.insertOne(createData);
+		const task = await Achievables.findOneById(result.insertedId);
 		if (!task) throw new Error('task-does-not-exist');
 		return task;
 	}
@@ -32,16 +32,16 @@ export class AchievableService extends ServiceClassInternal implements IAchievab
 			assignedBy: '',
 			assignedTo: '',
 		}));
-		await Tasks.insertMany(data);
+		await Achievables.insertMany(data);
 	}
 
 	async delete(taskId: string): Promise<void> {
 		await this.getTask(taskId);
-		await Tasks.removeById(taskId);
+		await Achievables.removeById(taskId);
 	}
 
 	async getTask(taskId: string): Promise<ITask> {
-		const task = await Tasks.findOneById(taskId);
+		const task = await Achievables.findOneById(taskId);
 		if (!task) {
 			throw new Error('task-does-not-exist');
 		}
@@ -56,8 +56,8 @@ export class AchievableService extends ServiceClassInternal implements IAchievab
 		const updateData = {
 			...params,
 		};
-		const result = await Tasks.updateOne(query, { $set: updateData });
-		const task = await Tasks.findOneById(result.upsertedId._id.toHexString());
+		const result = await Achievables.updateOne(query, { $set: updateData });
+		const task = await Achievables.findOneById(result.upsertedId._id.toHexString());
 		if (!task) throw new Error('task-does-not-exist');
 		return task;
 	}
@@ -71,9 +71,10 @@ export class AchievableService extends ServiceClassInternal implements IAchievab
 		// 2. daily/weekly/monthly task
 		// 3. todo
 		// 4. trophy
-		let result: Array<IAchievable>  = [];
-		result = result.concat(this.getDailyTask());
-		return Tasks.find(
+		let result: Array<IAchievable> = [];
+		result = result.concat(await Achievables.findByTypes(query.types));
+		// result = result.concat(this.getDailyTask());
+		return Achievables.find(
 			{ ...query },
 			{
 				...(sort && { sort }),
@@ -91,6 +92,20 @@ export class AchievableService extends ServiceClassInternal implements IAchievab
 	 */
 	private getDailyTask() {
 
-		return undefined;
+
+	}
+
+	/**
+	 * create or return list of today task
+	 *
+	 * @private
+	 */
+	private createTaskFromTemplates() {
+		// get template from Settings
+
+		// insert data to mongodb
+
+
+
 	}
 }

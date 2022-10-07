@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
-import { Tasks } from '@rocket.chat/models';
 
 import { sampleTasks, AchievableService } from '../../services/gso';
 import { ITaskCreateParams } from '../../sdk/types/gso/IAchievableService';
+import { IAchievable } from '@rocket.chat/core-typings';
 
 Meteor.methods({
 	async seed() {
@@ -90,6 +90,9 @@ Meteor.methods({
 
 		console.log(paginationOptions, queryOptions);
 		const service = new AchievableService();
+
+		// const results = await service.list(paginationOptions, queryOptions).toArray();
+
 
 		const results = await service.list(paginationOptions, queryOptions).toArray();
 
