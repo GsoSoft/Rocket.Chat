@@ -31,7 +31,7 @@ type RoomListRowProps = {
 	isAnonymous: boolean;
 };
 
-const Row = ({ data, item }: { data: RoomListRowProps; item: ISubscription & IRoom }): ReactElement => {
+const RoomListRow = ({ data, item }: { data: RoomListRowProps; item: ISubscription & IRoom }): ReactElement => {
 	const { extended, t, SideBarItemTemplate, AvatarTemplate, openedRoom, sidebarViewMode } = data;
 
 	const acceptCall = useVideoConfAcceptCall();
@@ -68,9 +68,9 @@ const Row = ({ data, item }: { data: RoomListRowProps; item: ISubscription & IRo
 			extended={extended}
 			SideBarItemTemplate={SideBarItemTemplate}
 			AvatarTemplate={AvatarTemplate}
-			videoConfActions={currentCall && videoConfActions}
+			videoConfActions={videoConfActions}
 		/>
 	);
 };
 
-export default memo(Row);
+export default memo(RoomListRow);
