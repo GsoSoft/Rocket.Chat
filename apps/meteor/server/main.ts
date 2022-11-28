@@ -75,6 +75,7 @@ import './publications/settings';
 import './publications/spotlight';
 import './publications/subscription';
 import './routes/avatar';
+import './routes/health';
 import './routes/i18n';
 import './routes/timesync';
 import './stream/stdout';
