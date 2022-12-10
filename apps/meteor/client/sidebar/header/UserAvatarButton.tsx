@@ -1,7 +1,9 @@
-import { IUser } from '@rocket.chat/core-typings';
+import type { IUser } from '@rocket.chat/core-typings';
 import { css } from '@rocket.chat/css-in-js';
 import { Box, Dropdown } from '@rocket.chat/fuselage';
-import React, { memo, useRef, ReactElement } from 'react';
+import { useUser } from '@rocket.chat/ui-contexts';
+import type { ReactElement } from 'react';
+import React, { memo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { UserStatus } from '../../components/UserStatus';
@@ -9,7 +11,8 @@ import UserAvatar from '../../components/avatar/UserAvatar';
 import UserDropdown from './UserDropdown';
 import { useDropdownVisibility } from './hooks/useDropdownVisibility';
 
-const UserAvatarButton = function UserAvatarButton({ user }: { user: IUser }): ReactElement {
+const UserAvatarButton = function UserAvatarButton(): ReactElement {
+	const user = useUser() as Required<IUser> | undefined;
 	const {
 		status = !user ? 'online' : 'offline',
 		username,
@@ -17,7 +20,7 @@ const UserAvatarButton = function UserAvatarButton({ user }: { user: IUser }): R
 		statusText,
 	} = user || {
 		_id: '',
-		username: 'Red',
+		username: 'Anonymous',
 		status: 'online',
 		statusText: '',
 	};
