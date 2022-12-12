@@ -1,7 +1,7 @@
 import { PaletteStyleTag } from '@rocket.chat/ui-theming/src/PaletteStyleTag';
 import { SidebarPaletteStyleTag } from '@rocket.chat/ui-theming/src/SidebarPaletteStyleTag';
 import type { FC } from 'react';
-import React, { Fragment, Suspense } from 'react';
+import React, { useContext, useState, useMemo, Fragment, Suspense } from 'react';
 import { useSyncExternalStore } from 'use-sync-external-store/shim';
 
 import { DailyTasksContext, DispatchDailyTasksContext } from '../../contexts/DailyTasksContext/GlobalState';

@@ -24,7 +24,7 @@ const CreateBlogForm = ({
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [tags, setTags] = useState('');
-	const [titleError, setTitleError] = useState(false);
+
 	const [contentError, setTContentError] = useState(false);
 
 	useEffect(() => {

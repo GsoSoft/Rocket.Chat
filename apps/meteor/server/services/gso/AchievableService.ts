@@ -72,7 +72,7 @@ export class AchievableService extends ServiceClassInternal implements IAchievab
 		// 3. todo
 		// 4. trophy
 		let result: Array<IAchievable> = [];
-		result = result.concat(await Achievables.findByTypes(query.types));
+		result = result.concat(Achievables.findByTypes(query.types));
 		// result = result.concat(this.getDailyTask());
 		return Achievables.find(
 			{ ...query },
