@@ -27,7 +27,9 @@ const BlogView = (): ReactElement => {
 	};
 
 	Meteor.startup(() => {
+		console.info('blog home startup');
 		Tracker.autorun(() => {
+			console.info('blog autorun');
 			Meteor.subscribe('blogs.getList');
 			return Meteor.call('getBlogs', 10, (error, result) => {
 				// TODO: Add a success and error messages

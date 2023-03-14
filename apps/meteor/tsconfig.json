@@ -1,21 +1,16 @@
 {
+	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"module": "CommonJS",
 		"target": "es2018",
+		"module": "esNext",
 		"lib": ["esnext", "dom"],
 		"allowJs": true,
 		"checkJs": false,
 		"jsx": "react",
-		// "incremental": true,
 		"noEmit": true,
 		/* Strict Type-Checking Options */
-		"strict": true,
-		"noImplicitAny": true,
-		"strictNullChecks": true,
 		"strictPropertyInitialization": false,
 		/* Additional Checks */
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
 		"noImplicitReturns": false,
 		"noFallthroughCasesInSwitch": false,
 		/* Module Resolution Options */
@@ -27,9 +22,6 @@
 			"@/client/*": ["client/*"],
 			"@/app/*": ["app/*"]
 		},
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"esModuleInterop": true,
 		"preserveSymlinks": true
 		// "sourceMap": true,
 		// "declaration": true,
@@ -48,6 +40,7 @@
 		// "./ee/server/services/**"
 	],
 	"ts-node": {
-		"files": true
+		"files": false,
+		"swc": true
 	}
 }

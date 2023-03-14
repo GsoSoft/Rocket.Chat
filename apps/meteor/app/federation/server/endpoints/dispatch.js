@@ -1,5 +1,6 @@
 import { EJSON } from 'meteor/ejson';
 import { FederationServers } from '@rocket.chat/models';
+import { api } from '@rocket.chat/core-services';
 
 import { API } from '../../../api/server';
 import { serverLogger } from '../lib/logger';
@@ -7,8 +8,7 @@ import { contextDefinitions, eventTypes } from '../../../models/server/models/Fe
 import { FederationRoomEvents, Messages, Rooms, Subscriptions, Users } from '../../../models/server';
 import { normalizers } from '../normalizers';
 import { deleteRoom } from '../../../lib/server/functions';
-import { api } from '../../../../server/sdk/api';
-import { FileUpload } from '../../../file-upload';
+import { FileUpload } from '../../../file-upload/server';
 import { getFederationDomain } from '../lib/getFederationDomain';
 import { decryptIfNeeded } from '../lib/crypt';
 import { isFederationEnabled } from '../lib/isFederationEnabled';

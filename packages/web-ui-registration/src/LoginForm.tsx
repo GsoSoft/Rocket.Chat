@@ -45,6 +45,9 @@ export const LoginForm = ({ setLoginRoute }: { setLoginRoute: DispatchLoginRoute
 	const login = useLoginWithPassword();
 	const showFormLogin = useSetting('Accounts_ShowFormLogin');
 
+	const usernameOrEmailPlaceholder = String(useSetting('Accounts_EmailOrUsernamePlaceholder'));
+	const passwordPlaceholder = String(useSetting('Accounts_PasswordPlaceholder'));
+
 	const loginMutation: UseMutationResult<
 		void,
 		Error,
@@ -59,7 +62,7 @@ export const LoginForm = ({ setLoginRoute }: { setLoginRoute: DispatchLoginRoute
 		},
 		onError: (error: any) => {
 			if ([error.error, error.errorType].includes('error-invalid-email')) {
-				setError('email', { type: 'invalid-email', message: t('Invalid_email') });
+				setError('email', { type: 'invalid-email', message: t('registration.page.login.errors.invalidEmail') });
 			}
 
 			if ('error' in error && error.error !== 403) {
@@ -74,12 +77,7 @@ export const LoginForm = ({ setLoginRoute }: { setLoginRoute: DispatchLoginRoute
 	});
 
 	if (errors.email?.type === 'invalid-email') {
-		return (
-			<EmailConfirmationForm
-				onBackToLogin={() => clearErrors('email')}
-				email={getValues('username')?.includes('@') ? getValues('username') : undefined}
-			/>
-		);
+		return <EmailConfirmationForm onBackToLogin={() => clearErrors('email')} email={getValues('email')} />;
 	}
 
 	return (
@@ -110,7 +108,7 @@ export const LoginForm = ({ setLoginRoute }: { setLoginRoute: DispatchLoginRoute
 												clearErrors(['username', 'password']);
 											},
 										})}
-										placeholder={t('registration.component.form.emailPlaceholder')}
+										placeholder={usernameOrEmailPlaceholder || t('registration.component.form.emailPlaceholder')}
 										error={
 											errors.username?.message ||
 											(errors.username?.type === 'required' ? t('registration.component.form.requiredField') : undefined)
@@ -134,6 +132,7 @@ export const LoginForm = ({ setLoginRoute }: { setLoginRoute: DispatchLoginRoute
 												clearErrors(['username', 'password']);
 											},
 										})}
+										placeholder={passwordPlaceholder}
 										error={
 											errors.password?.message ||
 											(errors.password?.type === 'required' ? t('registration.component.form.requiredField') : undefined)

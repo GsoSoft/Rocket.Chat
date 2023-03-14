@@ -1,6 +1,6 @@
 import type { IUser } from '../IUser';
 import type { IRocketChatRecord } from '../IRocketChatRecord';
-import type { ICurrency } from './ICurrency';
+// import type { ICurrency } from './ICurrency';
 
 export interface IInventory extends IRocketChatRecord {
 	createdAt: Date;

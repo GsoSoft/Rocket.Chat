@@ -1,6 +1,10 @@
 import type { FC } from 'react';
 import React from 'react';
 
+import {
+	OmnichannelRoomIconProvider,
+} from '../components/RoomIcon/OmnichannelRoomIcon/provider/OmnichannelRoomIconProvider';
+import ActionManagerProvider from './ActionManagerProvider';
 import AttachmentProvider from '../components/message/Attachments/providers/AttachmentProvider';
 import AddressProvider from './AddressProvider';
 import AuthorizationProvider from './AuthorizationProvider';
@@ -22,6 +26,7 @@ import SettingsProvider from './SettingsProvider';
 import ToastMessagesProvider from './ToastMessagesProvider';
 import TooltipProvider from './TooltipProvider';
 import TranslationProvider from './TranslationProvider';
+import UserPresenceProvider from './UserPresenceProvider';
 import UserPreviousPageProvider from './UserPreviousPageProvider';
 import UserProvider from './UserProvider';
 import VideoConfProvider from './VideoConfProvider';
@@ -30,11 +35,11 @@ const MeteorProvider: FC = ({ children }) => (
 	<ConnectionStatusProvider>
 		<ServerProvider>
 			<RouterProvider>
-				<TranslationProvider>
-					<SessionProvider>
-						<TooltipProvider>
-							<ToastMessagesProvider>
-								<SettingsProvider>
+				<SettingsProvider>
+					<TranslationProvider>
+						<SessionProvider>
+							<TooltipProvider>
+								<ToastMessagesProvider>
 									<LayoutProvider>
 										<AvatarUrlProvider>
 											<CustomSoundProvider>
@@ -42,23 +47,28 @@ const MeteorProvider: FC = ({ children }) => (
 													<DeviceProvider>
 														<ModalProvider>
 															<AuthorizationProvider>
-																<VideoConfProvider>
-																	<CallProvider>
-																		<OmnichannelProvider>
-																			<UserPreviousPageProvider>
-																				<PaymentResultProvider>
-																					<DailyTasksProvider>
-																						<AddressProvider>
-																							<InstagramPageContextProvider>
-																								<AttachmentProvider>{children}</AttachmentProvider>
-																							</InstagramPageContextProvider>
-																						</AddressProvider>
-																					</DailyTasksProvider>
-																				</PaymentResultProvider>
-																			</UserPreviousPageProvider>
-																		</OmnichannelProvider>
-																	</CallProvider>
-																</VideoConfProvider>
+																<OmnichannelRoomIconProvider>
+																	<UserPresenceProvider>
+																		<ActionManagerProvider>
+																			<VideoConfProvider>
+																				<CallProvider>
+																					<UserPreviousPageProvider>
+																						<PaymentResultProvider>
+																							<DailyTasksProvider>
+																								<AddressProvider>
+																									<InstagramPageContextProvider>
+
+																										<OmnichannelProvider>{children}</OmnichannelProvider>
+																									</InstagramPageContextProvider>
+																								</AddressProvider>
+																							</DailyTasksProvider>
+																						</PaymentResultProvider>
+																					</UserPreviousPageProvider>
+																				</CallProvider>
+																			</VideoConfProvider>
+																		</ActionManagerProvider>
+																	</UserPresenceProvider>
+																</OmnichannelRoomIconProvider>
 															</AuthorizationProvider>
 														</ModalProvider>
 													</DeviceProvider>
@@ -66,11 +76,11 @@ const MeteorProvider: FC = ({ children }) => (
 											</CustomSoundProvider>
 										</AvatarUrlProvider>
 									</LayoutProvider>
-								</SettingsProvider>
-							</ToastMessagesProvider>
-						</TooltipProvider>
-					</SessionProvider>
-				</TranslationProvider>
+								</ToastMessagesProvider>
+							</TooltipProvider>
+						</SessionProvider>
+					</TranslationProvider>
+				</SettingsProvider>
 			</RouterProvider>
 		</ServerProvider>
 	</ConnectionStatusProvider>

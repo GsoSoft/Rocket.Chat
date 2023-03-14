@@ -12,15 +12,14 @@ import type {
 	IQueueMembershipSubscription,
 	IRegistrationInfo,
 } from '@rocket.chat/core-typings';
+import type { IVoipService } from '@rocket.chat/core-services';
+import { api, ServiceClassInternal } from '@rocket.chat/core-services';
 
-import type { IVoipService } from '../../sdk/types/IVoipService';
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
 import { Logger } from '../../lib/logger/Logger';
 import { CommandHandler } from './connector/asterisk/CommandHandler';
 import { CommandType } from './connector/asterisk/Command';
 import { Commands } from './connector/asterisk/Commands';
 import { getServerConfigDataFromSettings, voipEnabled } from './lib/Helper';
-import { api } from '../../sdk/api';
 
 export class VoipService extends ServiceClassInternal implements IVoipService {
 	protected name = 'voip';
@@ -95,10 +94,6 @@ export class VoipService extends ServiceClassInternal implements IVoipService {
 		return getServerConfigDataFromSettings(type);
 	}
 
-	getConnector(): CommandHandler {
-		return this.commandHandler;
-	}
-
 	async getQueueSummary(): Promise<IVoipConnectorResult> {
 		return this.commandHandler.executeCommand(Commands.queue_summary);
 	}
@@ -122,7 +117,7 @@ export class VoipService extends ServiceClassInternal implements IVoipService {
 				queueName: queue,
 			})) as IVoipConnectorResult;
 			const details = queueDetails.result as IQueueDetails;
-			if (!details.members || !details.members.length) {
+			if (!details.members?.length) {
 				// Go to the next queue if queue does not have any
 				// memmbers.
 				continue;
@@ -185,7 +180,7 @@ export class VoipService extends ServiceClassInternal implements IVoipService {
 
 			const details = queueDetails.result as IQueueDetails;
 
-			if (!details.members || !details.members.length) {
+			if (!details.members?.length) {
 				// Go to the next queue if queue does not have any
 				// memmbers.
 				continue;

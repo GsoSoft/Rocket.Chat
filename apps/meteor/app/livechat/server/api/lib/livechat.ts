@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Random } from 'meteor/random';
+import { Random } from '@rocket.chat/random';
 import { TAPi18n } from 'meteor/rocketchat:tap-i18n';
 import { EmojiCustom, LivechatTrigger, LivechatVisitors } from '@rocket.chat/models';
 import type {
@@ -30,7 +30,7 @@ async function findTriggers(): Promise<Pick<ILivechatTrigger, '_id' | 'actions' 
 	}));
 }
 
-export function findDepartments(businessUnit?: string): Promise<ILivechatDepartment[]> {
+function findDepartments(businessUnit?: string): Promise<ILivechatDepartment[]> {
 	// TODO: check this function usage
 	return LivechatDepartment.findEnabledWithAgentsAndBusinessUnit(businessUnit, {
 		_id: 1,
@@ -147,7 +147,7 @@ export async function settings({ businessUnit = '' }: { businessUnit?: string } 
 			nameFieldRegistrationForm: initSettings.Livechat_name_field_registration_form,
 			emailFieldRegistrationForm: initSettings.Livechat_email_field_registration_form,
 			displayOfflineForm: initSettings.Livechat_display_offline_form,
-			videoCall: initSettings.Omnichannel_call_provider === 'Jitsi',
+			videoCall: initSettings.Omnichannel_call_provider === 'default-provider',
 			fileUpload: initSettings.Livechat_fileupload_enabled && initSettings.FileUpload_Enabled,
 			language: initSettings.Language,
 			transcript: initSettings.Livechat_enable_transcript,
@@ -209,7 +209,7 @@ export async function settings({ businessUnit = '' }: { businessUnit?: string } 
 	};
 }
 
-export async function getExtraConfigInfo(room: IOmnichannelRoom): Promise<any> {
+export async function getExtraConfigInfo(room?: IOmnichannelRoom): Promise<any> {
 	return callbacks.run('livechat.onLoadConfigApi', { room });
 }
 

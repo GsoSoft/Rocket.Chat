@@ -1,7 +1,7 @@
 import type { IUser } from '../IUser';
 import type { IRocketChatRecord } from '../IRocketChatRecord';
 import type { IGatewayTransaction, IPaymentGateway, IPaymentGatewayData } from './IPaymentGateway';
-import type { ICurrency } from './ICurrency';
+// import type { ICurrency } from './ICurrency';
 import type { IFundAccount } from './IFundBalance';
 
 /**

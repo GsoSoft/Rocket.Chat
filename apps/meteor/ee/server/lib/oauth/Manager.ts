@@ -1,15 +1,16 @@
 import { Roles } from '@rocket.chat/models';
+import type { IUser } from '@rocket.chat/core-typings';
 
 import { Rooms } from '../../../../app/models/server';
 import { addUserToRoom, createRoom } from '../../../../app/lib/server/functions';
 import { Logger } from '../../../../app/logger/server';
 import { syncUserRoles } from '../syncUserRoles';
 
-export const logger = new Logger('OAuth');
+const logger = new Logger('OAuth');
 
 export class OAuthEEManager {
 	static mapSSOGroupsToChannels(
-		user: Record<string, any>,
+		user: IUser,
 		identity: Record<string, any>,
 		groupClaimName: string,
 		channelsMap: Record<string, any> | undefined,
@@ -28,13 +29,13 @@ export class OAuthEEManager {
 						let room = Rooms.findOneByNonValidatedName(channel);
 						if (!room) {
 							room = createRoom('c', channel, channelsAdmin, [], false);
-							if (!room || !room.rid) {
+							if (!room?.rid) {
 								logger.error(`could not create channel ${channel}`);
 								return;
 							}
 						}
 						if (Array.isArray(groupsFromSSO) && groupsFromSSO.includes(ssoGroup)) {
-							addUserToRoom(room._id, user.username);
+							addUserToRoom(room._id, user);
 						}
 					}
 				}
@@ -50,9 +51,12 @@ export class OAuthEEManager {
 				user.roles = [];
 			}
 
+			const rolesIdsFromSSO = Promise.await(Roles.findInIdsOrNames(rolesFromSSO).toArray()).map((role) => role._id);
+			const allowedRoles = Promise.await(Roles.findInIdsOrNames(rolesToSync).toArray()).map((role) => role._id);
+
 			Promise.await(
-				syncUserRoles(user._id, rolesFromSSO, {
-					allowedRoles: rolesToSync,
+				syncUserRoles(user._id, rolesIdsFromSSO, {
+					allowedRoles,
 				}),
 			);
 		}
