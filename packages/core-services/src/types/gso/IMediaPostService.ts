@@ -1,5 +1,5 @@
-import { AtLeastOne, IMediaPost, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
-import { AggregationCursor, FindCursor } from 'mongodb';
+import type { AtLeastOne, IMediaPost, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
+import type { AggregationCursor, FindCursor } from 'mongodb';
 
 export type IMediaPostWithoutID = Omit<IMediaPost, '_id'>;
 

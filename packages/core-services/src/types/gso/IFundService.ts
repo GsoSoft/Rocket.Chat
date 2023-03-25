@@ -1,6 +1,6 @@
-import { ICurrency, IFundBalance, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
-import { AtLeastOne, IExchangeCurrency, IFundOwner, ITransaction } from '@rocket.chat/core-typings/src/gso';
-import { Cursor } from 'mongodb';
+import type { ICurrency, IFundBalance, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
+import type { AtLeastOne, IExchangeCurrency, IFundOwner, ITransaction } from '@rocket.chat/core-typings/src/gso';
+import type { FindCursor } from 'mongodb';
 
 export type ITransactionLean = Omit<ITransaction, '_id' | '_updatedAt' | 'createdAt'>;
 
@@ -20,7 +20,7 @@ export interface IFundService {
 	 * Allow user to init an currency exchange order. Return fund state before and after.
 	 * @param owner
 	 */
-	initCurrencyExchange(userId: string, from, to, amount): Promise<IExchangeCurrency>;
+	initCurrencyExchange(userId: string, from: any, to: any, amount: number): Promise<IExchangeCurrency>;
 
 	/**
 	 *
@@ -30,7 +30,7 @@ export interface IFundService {
 
 	createMany(transactions: ITransactionCreateParams[]): Promise<void>;
 
-	list(paginationOptions?: IPaginationOptions, queryOptions?: IQueryOptions<ITransaction>): Cursor<ITransaction>;
+	list(paginationOptions?: IPaginationOptions, queryOptions?: IQueryOptions<ITransaction>): FindCursor<ITransaction>;
 
 	update(transactionId: ITransaction['_id'], params: ITransactionUpdateParams): Promise<ITransaction>;
 

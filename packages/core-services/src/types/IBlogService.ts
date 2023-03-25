@@ -1,5 +1,5 @@
-import { AtLeastOne, IBlog, PartialBy } from '@rocket.chat/core-typings';
-import { AggregationCursor, FindCursor } from 'mongodb';
+import type { AtLeastOne, IBlog, PartialBy } from '@rocket.chat/core-typings';
+import type { AggregationCursor, FindCursor } from 'mongodb';
 
 export type IBlogWithoutID = PartialBy<Omit<IBlog, '_id'>, 'tags'>;
 

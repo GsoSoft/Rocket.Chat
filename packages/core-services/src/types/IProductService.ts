@@ -1,6 +1,6 @@
-import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
-import { AtLeastOne, IProduct, PartialBy } from '@rocket.chat/core-typings/src/gso';
-import { Cursor } from 'mongodb';
+import type { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
+import type { AtLeastOne, IProduct, PartialBy } from '@rocket.chat/core-typings/src/gso';
+import type { FindCursor } from 'mongodb';
 
 export type IProductWithoutID = PartialBy<Omit<IProduct, '_id'>, 'ranking'>;
 
@@ -15,7 +15,7 @@ export type IProductUpdateBody = IProductUpdateParams & { _updatedAt: IProduct['
 export interface IProductService {
 	create(params: IProductCreateParams): Promise<IProduct>;
 	createMany(products: IProductCreateParams[]): Promise<void>;
-	list(paginationOptions?: IPaginationOptions, queryOptions?: IQueryOptions<IProduct>): Cursor<IProduct>;
+	list(paginationOptions?: IPaginationOptions, queryOptions?: IQueryOptions<IProduct>): FindCursor<IProduct>;
 	update(productId: string, params: IProductUpdateParams): Promise<IProduct>;
 	delete(productId: string): Promise<void>;
 	getProduct(productId: string): Promise<IProduct>;

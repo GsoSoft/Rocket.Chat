@@ -1,5 +1,4 @@
-import { AtLeastOne, IComment, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
-import { Cursor } from 'mongodb';
+import type { AtLeastOne, IComment, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
 export type ICommentWithoutID = Omit<IComment, '_id'>;
 
@@ -14,7 +13,7 @@ export type ICommentUpdateBody = ICommentUpdateParams & { _updatedAt: IComment['
 export interface ICommentService {
 	create(params: ICommentCreateParams): Promise<IComment>;
 	createMany(comments: ICommentCreateParams[]): Promise<void>;
-	list(paginationOptions?: IPaginationOptions, queryOptions?: IQueryOptions<IComment>): Cursor<IComment>;
+	list(paginationOptions?: IPaginationOptions, queryOptions?: IQueryOptions<IComment>): Promise<IComment>;
 	update(commentId: string, params: ICommentUpdateParams): Promise<IComment>;
 	delete(commentId: string): Promise<void>;
 	getComment(commentId: string): Promise<IComment>;

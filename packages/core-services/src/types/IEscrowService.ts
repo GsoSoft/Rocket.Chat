@@ -1,5 +1,4 @@
-import { AtLeastOne, IEscrow, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
-import { Cursor } from 'mongodb';
+import type { AtLeastOne, IEscrow, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
 export type IEscrowLean = Omit<IEscrow, '_id' | '_updatedAt'>;
 
@@ -10,7 +9,7 @@ export type IEscrowUpdateParams = AtLeastOne<IEscrowLean>;
 export interface IEscrowService {
 	create(params: IEscrowCreateParams): Promise<IEscrow>;
 	createMany(escrows: IEscrowCreateParams[]): Promise<void>;
-	list(paginationOptions?: IPaginationOptions, queryOptions?: IQueryOptions<IEscrow>): Cursor<IEscrow>;
+	list(paginationOptions?: IPaginationOptions, queryOptions?: IQueryOptions<IEscrow>): Promise<IEscrow>;
 	update(EscrowId: IEscrow['_id'], params: IEscrowUpdateParams): Promise<IEscrow>;
 	delete(EscrowId: IEscrow['_id']): Promise<void>;
 	getEscrow(EscrowId: IEscrow['_id']): Promise<IEscrow>;
