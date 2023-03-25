@@ -1,4 +1,3 @@
-import type { Cursor } from 'mongodb';
 import { ITask } from '@rocket.chat/core-typings/dist/gso';
 import { Achievables } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
