@@ -86,3 +86,4 @@ out.txt
 dist
 *-session.json
 matrix-federation-config/*
+.eslintcache

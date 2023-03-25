@@ -42,9 +42,9 @@ roomCoordinator.add(DirectMessageRoomType, {
 		}
 	},
 
-	allowMemberAction(room: IRoom, action, userId) {
+	async allowMemberAction(room: IRoom, action, userId) {
 		if (isRoomFederated(room)) {
-			return Federation.actionAllowed(room, action, userId);
+			return Promise.await(Federation.actionAllowed(room, action, userId));
 		}
 		switch (action) {
 			case RoomMemberActions.BLOCK:
@@ -54,7 +54,7 @@ roomCoordinator.add(DirectMessageRoomType, {
 		}
 	},
 
-	roomName(room, userId?) {
+	async roomName(room, userId?) {
 		const subscription = ((): { fname?: string; name?: string } | undefined => {
 			if (room.fname || room.name) {
 				return {
@@ -91,7 +91,7 @@ roomCoordinator.add(DirectMessageRoomType, {
 		return (room?.uids?.length || 0) > 2;
 	},
 
-	getNotificationDetails(room, sender, notificationMessage, userId) {
+	async getNotificationDetails(room, sender, notificationMessage, userId) {
 		const useRealName = settings.get<boolean>('UI_Use_Real_Name');
 
 		if (this.isGroupChat(room)) {
