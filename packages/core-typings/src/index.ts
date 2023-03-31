@@ -123,6 +123,7 @@ export * from './SpotlightUser';
 export * from './search';
 export * from './omnichannel';
 export * from './AppsTokens';
+export * from './ILivechatUnitMonitor';
 
 // GSO
 export * from './gso';

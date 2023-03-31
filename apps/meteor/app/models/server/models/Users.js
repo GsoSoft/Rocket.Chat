@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import _ from 'underscore';
 import { escapeRegExp } from '@rocket.chat/string-helpers';
+import { Subscriptions } from '@rocket.chat/models';
 
 import { Base } from './_Base';
-import Subscriptions from './Subscriptions';
 import { settings } from '../../../settings/server';
 import { trim } from '../../../../lib/utils/stringUtils';
 
@@ -31,6 +31,7 @@ const queryStatusAgentOnline = (extraFilters = {}) => ({
 		statusConnection: { $ne: 'away' },
 	}),
 });
+// The promise.await will die with the model :)
 export class Users extends Base {
 	constructor(...args) {
 		super(...args);
@@ -62,18 +63,6 @@ export class Users extends Base {
 		this.tryEnsureIndex({ language: 1 }, { sparse: true });
 		this.tryEnsureIndex({ 'active': 1, 'services.email2fa.enabled': 1 }, { sparse: true }); // used by statistics
 		this.tryEnsureIndex({ 'active': 1, 'services.totp.enabled': 1 }, { sparse: true }); // used by statistics
-	}
-
-	getLoginTokensByUserId(userId) {
-		const query = {
-			'services.resume.loginTokens.type': {
-				$exists: true,
-				$eq: 'personalAccessToken',
-			},
-			'_id': userId,
-		};
-
-		return this.find(query, { fields: { 'services.resume.loginTokens': 1 } });
 	}
 
 	addPersonalAccessTokenToUser({ userId, loginTokenObject }) {
@@ -450,38 +439,6 @@ export class Users extends Base {
 		);
 	}
 
-	enableEmail2FAByUserId(userId) {
-		return this.update(
-			{
-				_id: userId,
-			},
-			{
-				$set: {
-					'services.email2fa': {
-						enabled: true,
-						changedAt: new Date(),
-					},
-				},
-			},
-		);
-	}
-
-	disableEmail2FAByUserId(userId) {
-		return this.update(
-			{
-				_id: userId,
-			},
-			{
-				$set: {
-					'services.email2fa': {
-						enabled: false,
-						changedAt: new Date(),
-					},
-				},
-			},
-		);
-	}
-
 	findByIdsWithPublicE2EKey(ids, options) {
 		const query = {
 			'_id': {
@@ -600,12 +557,6 @@ export class Users extends Base {
 		return this.findOne(query, options);
 	}
 
-	findOneAdmin(admin, options) {
-		const query = { admin };
-
-		return this.findOne(query, options);
-	}
-
 	findOneByIdAndLoginToken(_id, token, options) {
 		const query = {
 			_id,
@@ -657,16 +608,6 @@ export class Users extends Base {
 		return this.find(query, options);
 	}
 
-	findNotOfflineByIds(users, options) {
-		const query = {
-			_id: { $in: users },
-			status: {
-				$in: ['online', 'away', 'busy'],
-			},
-		};
-		return this.find(query, options);
-	}
-
 	findUsersNotOffline(options) {
 		const query = {
 			username: {
@@ -680,22 +621,8 @@ export class Users extends Base {
 		return this.find(query, options);
 	}
 
-	findNotIdUpdatedFrom(uid, from, options) {
-		const query = {
-			_id: { $ne: uid },
-			username: {
-				$exists: 1,
-			},
-			_updatedAt: { $gte: from },
-		};
-
-		return this.find(query, options);
-	}
-
 	findByRoomId(rid, options) {
-		const data = Subscriptions.findByRoomId(rid)
-			.fetch()
-			.map((item) => item.u._id);
+		const data = Promise.await(Subscriptions.findByRoomId(rid).toArray()).map((item) => item.u._id);
 		const query = {
 			_id: {
 				$in: data,
@@ -876,10 +803,6 @@ export class Users extends Base {
 		};
 
 		return this.findOne(query, options);
-	}
-
-	findRemote(options = {}) {
-		return this.find({ isRemote: true }, options);
 	}
 
 	findActiveRemote(options = {}) {
@@ -1110,30 +1033,6 @@ export class Users extends Base {
 		};
 
 		return this.update({}, update, { multi: true });
-	}
-
-	/**
-	 * @param latestLastLoginDate
-	 * @param {IRole['_id']} role the role id
-	 * @param {boolean} active
-	 */
-	setActiveNotLoggedInAfterWithRole(latestLastLoginDate, role = 'user', active = false) {
-		const neverActive = { lastLogin: { $exists: 0 }, createdAt: { $lte: latestLastLoginDate } };
-		const idleTooLong = { lastLogin: { $lte: latestLastLoginDate } };
-
-		const query = {
-			$or: [neverActive, idleTooLong],
-			active: true,
-			roles: role,
-		};
-
-		const update = {
-			$set: {
-				active,
-			},
-		};
-
-		return this.update(query, update, { multi: true });
 	}
 
 	unsetLoginTokens(_id) {
