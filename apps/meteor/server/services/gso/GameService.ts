@@ -1,11 +1,11 @@
-import { Cursor } from 'mongodb';
+import { FindCursor } from 'mongodb';
 import { IGame } from '@rocket.chat/core-typings/dist/gso';
 import { Games } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
 import { ServiceClassInternal } from '@rocket.chat/core-services';
-import { IGameService, IGameCreateParams, IGameUpdateParams } from '../../sdk/types/IGameService';
+import { IGameService, IGameCreateParams, IGameUpdateParams } from '@rocket.chat/core-services';
 
 export class GameService extends ServiceClassInternal implements IGameService {
 	protected name = 'game';
@@ -63,7 +63,7 @@ export class GameService extends ServiceClassInternal implements IGameService {
 	list(
 		{ offset, count }: Partial<IPaginationOptions> = { offset: 0, count: 50 },
 		{ sort, query }: IQueryOptions<IGame> = { sort: {} },
-	): Cursor<IGame> {
+	): FindCursor<IGame> {
 		return Games.find(
 			{ ...query },
 			{

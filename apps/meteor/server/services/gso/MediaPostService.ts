@@ -5,7 +5,7 @@ import { MediaPosts } from '@rocket.chat/models';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
 import { ServiceClassInternal } from '@rocket.chat/core-services';
-import { IMediaPostService, IMediaPostCreateParams, IMediaPostUpdateParams } from '../../sdk/types/gso/IMediaPostService';
+import { IMediaPostService, IMediaPostCreateParams, IMediaPostUpdateParams } from '@rocket.chat/core-services';
 
 export class MediaPostService extends ServiceClassInternal implements IMediaPostService {
 	protected name = 'mediaPost';

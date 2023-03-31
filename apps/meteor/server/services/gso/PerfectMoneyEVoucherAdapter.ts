@@ -22,4 +22,10 @@ export class PerfectMoneyEVoucherAdapter implements IPaymentGatewayAdapter {
 		throw new Error('Method not implemented.');
 	}
 
+	convertDeposit(): any {
+	}
+
+	convertWithdrawal(): any {
+	}
+
 }

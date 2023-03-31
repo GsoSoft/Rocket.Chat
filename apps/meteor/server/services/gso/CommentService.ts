@@ -5,8 +5,7 @@ import { InsertionModel } from '@rocket.chat/model-typings';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
 import { ServiceClassInternal } from '@rocket.chat/core-services';
-import { ICommentService, ICommentCreateParams, ICommentUpdateParams } from '../../sdk/types/ICommentService';
-
+import { ICommentService, ICommentCreateParams, ICommentUpdateParams } from '@rocket.chat/core-services';
 export class CommentService extends ServiceClassInternal implements ICommentService {
 	protected name = 'comment';
 

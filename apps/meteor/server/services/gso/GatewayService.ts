@@ -1,11 +1,10 @@
-import { Cursor } from 'mongodb';
-import { IGateway } from '@rocket.chat/core-typings/dist/gso';
+import { FindCursor } from 'mongodb';
+import type { IGateway } from '@rocket.chat/core-typings';
 import { Gateways } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
-import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
 import { ServiceClassInternal } from '@rocket.chat/core-services';
-import { IGatewayService, IGatewayCreateParams, IGatewayUpdateParams } from '../../sdk/types/IGatewayService';
+import { IGatewayService, IGatewayCreateParams, IGatewayUpdateParams } from '@rocket.chat/core-services';
 
 export class GatewayService extends ServiceClassInternal implements IGatewayService {
 	protected name = 'gateway';

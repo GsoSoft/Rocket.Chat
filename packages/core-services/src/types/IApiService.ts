@@ -1,4 +1,4 @@
-import type { IBroker, IBrokerNode } from './gso/IBroker';
+import type { IBroker, IBrokerNode } from './IBroker';
 import type { IServiceClass } from './ServiceClass';
 import type { EventSignatures } from '../Events';
 

@@ -1,11 +1,11 @@
-import { AggregationCursor, Cursor } from 'mongodb';
+import { AggregationCursor, FindCursor } from 'mongodb';
 import { ITag } from '@rocket.chat/core-typings/dist/gso';
 import { Tags } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
 import { ServiceClassInternal } from '@rocket.chat/core-services';
-import { ITagService, ITagCreateParams, ITagUpdateParams } from '../../sdk/types/ITagService';
+import { ITagService, ITagCreateParams, ITagUpdateParams } from '@rocket.chat/core-services';
 
 export class TagService extends ServiceClassInternal implements ITagService {
 	protected name = 'tag';

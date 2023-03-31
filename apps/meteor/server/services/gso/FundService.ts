@@ -7,7 +7,7 @@ import { IFundOwner, IExchangeCurrency, IFundAccount } from '@rocket.chat/core-t
 import { Meteor } from 'meteor/meteor';
 
 import { ServiceClassInternal } from '@rocket.chat/core-services';
-import { IFundService } from '../../sdk/types/gso/IFundService';
+import { IFundService } from '@rocket.chat/core-services';
 
 const createHash = (length: number): string => {
 	let result = '';

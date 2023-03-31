@@ -2,7 +2,7 @@ import { EventEmitter } from 'events';
 
 import { InstanceStatus } from '@rocket.chat/models';
 
-import type { IBroker, IBrokerNode } from './types/gso/IBroker';
+import type { IBroker, IBrokerNode } from './types/IBroker';
 import type { ServiceClass, IServiceClass } from './types/ServiceClass';
 import { asyncLocalStorage } from '.';
 import type { EventSignatures } from './Events';

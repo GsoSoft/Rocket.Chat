@@ -1,10 +1,10 @@
 import { AggregationCursor, FindCursor } from 'mongodb';
-import { IBlog } from '@rocket.chat/core-typings/dist/gso';
+import { IBlog } from '@rocket.chat/core-typings';
 // import { Blogs } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { Blogs } from '@rocket.chat/models';
 
-import { ServiceClassInternal } from '@rocket.chat/core-services';
+import { ServiceClassInternal } from "@rocket.chat/core-services";
 import type { IBlogService, IBlogCreateParams, IBlogUpdateParams } from '@rocket.chat/core-services';
 
 export class BlogService extends ServiceClassInternal implements IBlogService {

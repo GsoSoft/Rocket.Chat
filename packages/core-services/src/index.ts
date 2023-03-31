@@ -49,7 +49,7 @@ export { api } from './api';
 export { EventSignatures } from './Events';
 export { LocalBroker } from './LocalBroker';
 
-export { IBroker, IBrokerNode, BaseMetricOptions, IServiceMetrics } from './types/gso/IBroker';
+export { IBroker, IBrokerNode, BaseMetricOptions, IServiceMetrics } from './types/IBroker';
 
 export { IServiceContext, ServiceClass, IServiceClass, ServiceClassInternal } from './types/ServiceClass';
 
