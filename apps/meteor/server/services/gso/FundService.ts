@@ -1,4 +1,4 @@
-import { Cursor } from 'mongodb';
+import { FindCursor } from 'mongodb';
 import { ICurrency, IFundBalance, IGatewayData, ITransaction } from '@rocket.chat/core-typings/dist/gso';
 import { FundBalances, FundTransactions, Transactions } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
@@ -6,7 +6,7 @@ import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 import { IFundOwner, IExchangeCurrency, IFundAccount } from '@rocket.chat/core-typings/src/gso';
 import { Meteor } from 'meteor/meteor';
 
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
+import { ServiceClassInternal } from '@rocket.chat/core-services';
 import { IFundService } from '../../sdk/types/gso/IFundService';
 
 const createHash = (length: number): string => {

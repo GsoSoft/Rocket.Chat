@@ -4,7 +4,7 @@ import { Gateways } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
+import { ServiceClassInternal } from '@rocket.chat/core-services';
 import { IGatewayService, IGatewayCreateParams, IGatewayUpdateParams } from '../../sdk/types/IGatewayService';
 
 export class GatewayService extends ServiceClassInternal implements IGatewayService {

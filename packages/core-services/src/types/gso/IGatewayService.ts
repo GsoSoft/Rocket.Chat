@@ -1,5 +1,5 @@
 import type { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
-import type { AtLeastOne, IGateway, PartialBy } from '@rocket.chat/core-typings/src/gso';
+import type { AtLeastOne, IGateway, PartialBy } from '@rocket.chat/core-typings/dist/gso';
 import type { FindCursor } from 'mongodb';
 
 export type IGatewayLean = Omit<IGateway, '_id' | '_updatedAt'>;

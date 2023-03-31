@@ -4,7 +4,7 @@ import { Games } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
+import { ServiceClassInternal } from '@rocket.chat/core-services';
 import { IGameService, IGameCreateParams, IGameUpdateParams } from '../../sdk/types/IGameService';
 
 export class GameService extends ServiceClassInternal implements IGameService {

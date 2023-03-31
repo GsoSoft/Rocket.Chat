@@ -1,5 +1,5 @@
 import type { IApiService } from '../types/IApiService';
-import type { IBroker, IBrokerNode } from '../types/IBroker';
+import type { IBroker, IBrokerNode } from '../types/gso/IBroker';
 import type { IServiceClass } from '../types/ServiceClass';
 import type { EventSignatures } from '../Events';
 

@@ -1,5 +1,5 @@
 import type { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
-import type { ITagGroup } from '@rocket.chat/core-typings/src/gso';
+import type { ITagGroup } from '@rocket.chat/core-typings/dist/gso';
 import type { FindCursor } from 'mongodb';
 
 export type ITagGroupWithoutID = Omit<ITagGroup, '_id'>;

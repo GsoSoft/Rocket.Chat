@@ -4,7 +4,7 @@ import { InsertionModel } from '@rocket.chat/model-typings';
 import { MediaPosts } from '@rocket.chat/models';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
+import { ServiceClassInternal } from '@rocket.chat/core-services';
 import { IMediaPostService, IMediaPostCreateParams, IMediaPostUpdateParams } from '../../sdk/types/gso/IMediaPostService';
 
 export class MediaPostService extends ServiceClassInternal implements IMediaPostService {

@@ -1,11 +1,12 @@
-import { Cursor } from 'mongodb';
-import { IProduct } from '@rocket.chat/core-typings/dist/gso';
+import type { IProduct } from '@rocket.chat/core-typings';
 import { Products } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
-import { IProductService, IProductCreateParams, IProductUpdateParams } from '../../sdk/types/IProductService';
+
+import { ServiceClassInternal } from '@rocket.chat/core-services';
+import type { IProductService, IProductCreateParams, IProductUpdateParams } from '@rocket.chat/core-services';
+import { FindCursor } from 'mongodb';
 
 export class ProductService extends ServiceClassInternal implements IProductService {
 	protected name = 'product';
@@ -61,7 +62,7 @@ export class ProductService extends ServiceClassInternal implements IProductServ
 	list(
 		{ offset, count }: Partial<IPaginationOptions> = { offset: 0, count: 50 },
 		{ sort, query }: IQueryOptions<IProduct> = { sort: {} },
-	): Cursor<IProduct> {
+	): FindCursor<IProduct> {
 		return Products.find(
 			{ ...query },
 			{

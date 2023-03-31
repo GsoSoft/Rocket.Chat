@@ -1,11 +1,11 @@
-import { Cursor } from 'mongodb';
+import { FindCursor } from 'mongodb';
 import { ITagGroup } from '@rocket.chat/core-typings/dist/gso';
 import { TagGroups } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
-import { ITagGroupService, ITagGroupCreateParams, ITagGroupUpdateParams } from '../../sdk/types/ITagGroupService';
+import { ServiceClassInternal } from '@rocket.chat/core-services';
+import type { ITagGroupService, ITagGroupCreateParams, ITagGroupUpdateParams }  from '@rocket.chat/core-services';
 
 export class TagGroupService extends ServiceClassInternal implements ITagGroupService {
 	protected name = 'tagGroup';
@@ -57,7 +57,7 @@ export class TagGroupService extends ServiceClassInternal implements ITagGroupSe
 	list(
 		{ offset, count }: Partial<IPaginationOptions> = { offset: 0, count: 50 },
 		{ sort, query }: IQueryOptions<ITagGroup> = { sort: {} },
-	): Cursor<ITagGroup> {
+	): FindCursor<ITagGroup> {
 		return TagGroups.find(
 			{ ...query },
 			{

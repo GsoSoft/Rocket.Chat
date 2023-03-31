@@ -3,10 +3,14 @@ import { Achievables } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { IAchievable, IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
-import { IAchievableService, ITaskCreateParams, ITaskUpdateParams } from '../../sdk/types/gso/IAchievableService';
+import { ServiceClassInternal } from '@rocket.chat/core-services';
+import type { IAchievableService, ITaskCreateParams, ITaskUpdateParams } from '@rocket.chat/core-services';
+import { FindCursor } from 'mongodb';
 
 export class AchievableService extends ServiceClassInternal implements IAchievableService {
+    assign(params: ITaskCreateParams, toUser: string): Promise<IAchievable> {
+        throw new Error('Method not implemented.');
+    }
 	protected name = 'task';
 
 	async create(params: ITaskCreateParams): Promise<ITask> {
@@ -64,7 +68,7 @@ export class AchievableService extends ServiceClassInternal implements IAchievab
 	list(
 		{ offset, count }: Partial<IPaginationOptions> = { offset: 0, count: 50 },
 		{ sort, query }: IQueryOptions<IAchievable> = { sort: { endDate: 1, sortOrder: -1 } },
-	): Cursor<IAchievable> {
+	): FindCursor<IAchievable> {
 		// !!!broadcast an event to dedicated taskManager class such as :
 		// 1. event
 		// 2. daily/weekly/monthly task

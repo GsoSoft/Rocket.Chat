@@ -49,7 +49,7 @@ export { api } from './api';
 export { EventSignatures } from './Events';
 export { LocalBroker } from './LocalBroker';
 
-export { IBroker, IBrokerNode, BaseMetricOptions, IServiceMetrics } from './types/IBroker';
+export { IBroker, IBrokerNode, BaseMetricOptions, IServiceMetrics } from './types/gso/IBroker';
 
 export { IServiceContext, ServiceClass, IServiceClass, ServiceClassInternal } from './types/ServiceClass';
 
@@ -150,3 +150,6 @@ export const FederationEE = proxifyWithWait<IFederationServiceEE>('federation-en
 // Calls without wait. Means that the service is optional and the result may be an error
 // of service/method not available
 export const EnterpriseSettings = proxify<IEnterpriseSettings>('ee-settings');
+
+// GSO
+export * from './types/gso';

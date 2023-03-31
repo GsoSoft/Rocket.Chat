@@ -3,7 +3,7 @@ import { check, Match } from 'meteor/check';
 import { IPaginationOptions, IProduct, IQueryOptions } from '@rocket.chat/core-typings';
 
 import { ProductService } from '../../services/gso';
-import { IProductCreateParams, IProductUpdateParams } from '../../sdk/types/IProductService';
+import type {  IProductCreateParams, IProductUpdateParams } from '@rocket.chat/core-services';
 
 Meteor.methods({
 	async createProduct(params: IProductCreateParams): Promise<IProduct> {

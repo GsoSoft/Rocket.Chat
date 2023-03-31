@@ -4,8 +4,8 @@ import { Escrows } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
-import { IEscrowService, IEscrowCreateParams, IEscrowUpdateParams } from '../../sdk/types/IEscrowService';
+import { ServiceClassInternal } from '@rocket.chat/core-services';
+import type { IEscrowService, IEscrowCreateParams, IEscrowUpdateParams } from '@rocket.chat/core-services';
 
 export class EscrowService extends ServiceClassInternal implements IEscrowService {
 	protected name = 'escrow';

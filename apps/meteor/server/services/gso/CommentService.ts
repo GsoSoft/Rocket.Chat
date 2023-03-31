@@ -1,10 +1,10 @@
-import { Cursor } from 'mongodb';
+import { FindCursor } from 'mongodb';
 import { IComment } from '@rocket.chat/core-typings/dist/gso';
 import { Comments } from '@rocket.chat/models';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { IPaginationOptions, IQueryOptions } from '@rocket.chat/core-typings';
 
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
+import { ServiceClassInternal } from '@rocket.chat/core-services';
 import { ICommentService, ICommentCreateParams, ICommentUpdateParams } from '../../sdk/types/ICommentService';
 
 export class CommentService extends ServiceClassInternal implements ICommentService {
@@ -57,7 +57,7 @@ export class CommentService extends ServiceClassInternal implements ICommentServ
 	list(
 		{ offset, count }: Partial<IPaginationOptions> = { offset: 0, count: 50 },
 		{ sort, query }: IQueryOptions<IComment> = { sort: {} },
-	): Cursor<IComment> {
+	): FindCursor<IComment> {
 		return Comments.find(
 			{ ...query },
 			{

@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 
 import { asyncLocalStorage } from '../lib/asyncLocalStorage';
-import type { IBroker, IBrokerNode } from './IBroker';
+import type { IBroker, IBrokerNode } from './gso/IBroker';
 import type { EventSignatures } from '../Events';
 import type { IApiService } from './IApiService';
 

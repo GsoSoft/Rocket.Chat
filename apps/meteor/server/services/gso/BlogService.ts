@@ -4,8 +4,8 @@ import { IBlog } from '@rocket.chat/core-typings/dist/gso';
 import { InsertionModel } from '@rocket.chat/model-typings';
 import { Blogs } from '@rocket.chat/models';
 
-import { ServiceClassInternal } from '../../sdk/types/ServiceClass';
-import { IBlogService, IBlogCreateParams, IBlogUpdateParams } from '../../sdk/types/IBlogService';
+import { ServiceClassInternal } from '@rocket.chat/core-services';
+import type { IBlogService, IBlogCreateParams, IBlogUpdateParams } from '@rocket.chat/core-services';
 
 export class BlogService extends ServiceClassInternal implements IBlogService {
 	protected name = 'blog';
