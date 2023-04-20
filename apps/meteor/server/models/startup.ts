@@ -63,6 +63,7 @@ import './FederationRoomEvents';
 import './Imports';
 import './RawImports';
 import './AppsTokens';
+import './Migrations';
 
 // gso
 import './gso';

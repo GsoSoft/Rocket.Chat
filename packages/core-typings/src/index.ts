@@ -126,5 +126,7 @@ export * from './omnichannel';
 export * from './AppsTokens';
 export * from './ILivechatUnitMonitor';
 
+export * from './migrations/IControl';
+
 // GSO
 export * from './gso';
