@@ -130,6 +130,7 @@ export * from './AppsTokens';
 export * from './ILivechatUnitMonitor';
 
 export * from './migrations/IControl';
+export * from './ICustomOAuthConfig';
 
 // GSO
 export * from './gso';
