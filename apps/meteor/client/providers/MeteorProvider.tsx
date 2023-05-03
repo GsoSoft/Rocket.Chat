@@ -1,11 +1,8 @@
 import type { FC } from 'react';
 import React from 'react';
 
-import {
-	OmnichannelRoomIconProvider,
-} from '../components/RoomIcon/OmnichannelRoomIcon/provider/OmnichannelRoomIconProvider';
+import { OmnichannelRoomIconProvider } from '../components/RoomIcon/OmnichannelRoomIcon/provider/OmnichannelRoomIconProvider';
 import ActionManagerProvider from './ActionManagerProvider';
-import AttachmentProvider from '../components/message/Attachments/providers/AttachmentProvider';
 import AddressProvider from './AddressProvider';
 import AuthorizationProvider from './AuthorizationProvider';
 import AvatarUrlProvider from './AvatarUrlProvider';
@@ -14,6 +11,7 @@ import ConnectionStatusProvider from './ConnectionStatusProvider';
 import CustomSoundProvider from './CustomSoundProvider';
 import DailyTasksProvider from './DailyTasksProvider';
 import { DeviceProvider } from './DeviceProvider/DeviceProvider';
+import EmojiPickerProvider from './EmojiPickerProvider';
 import InstagramPageContextProvider from './InstagramPageProvider';
 import LayoutProvider from './LayoutProvider';
 import ModalProvider from './ModalProvider';
@@ -39,44 +37,45 @@ const MeteorProvider: FC = ({ children }) => (
 					<TranslationProvider>
 						<SessionProvider>
 							<TooltipProvider>
-								<ToastMessagesProvider>
-									<LayoutProvider>
-										<AvatarUrlProvider>
-											<CustomSoundProvider>
-												<UserProvider>
-													<DeviceProvider>
-														<ModalProvider>
-															<AuthorizationProvider>
-																<OmnichannelRoomIconProvider>
-																	<UserPresenceProvider>
-																		<ActionManagerProvider>
-																			<VideoConfProvider>
-																				<CallProvider>
-																					<UserPreviousPageProvider>
-																						<PaymentResultProvider>
-																							<DailyTasksProvider>
-																								<AddressProvider>
-																									<InstagramPageContextProvider>
-
-																										<OmnichannelProvider>{children}</OmnichannelProvider>
-																									</InstagramPageContextProvider>
-																								</AddressProvider>
-																							</DailyTasksProvider>
-																						</PaymentResultProvider>
-																					</UserPreviousPageProvider>
-																				</CallProvider>
-																			</VideoConfProvider>
-																		</ActionManagerProvider>
-																	</UserPresenceProvider>
-																</OmnichannelRoomIconProvider>
-															</AuthorizationProvider>
-														</ModalProvider>
-													</DeviceProvider>
-												</UserProvider>
-											</CustomSoundProvider>
-										</AvatarUrlProvider>
-									</LayoutProvider>
-								</ToastMessagesProvider>
+								<EmojiPickerProvider>
+									<ToastMessagesProvider>
+										<LayoutProvider>
+											<AvatarUrlProvider>
+												<CustomSoundProvider>
+													<UserProvider>
+														<DeviceProvider>
+															<ModalProvider>
+																<AuthorizationProvider>
+																	<OmnichannelRoomIconProvider>
+																		<UserPresenceProvider>
+																			<ActionManagerProvider>
+																				<VideoConfProvider>
+																					<CallProvider>
+																						<UserPreviousPageProvider>
+																							<PaymentResultProvider>
+																								<DailyTasksProvider>
+																									<AddressProvider>
+																										<InstagramPageContextProvider>
+																											<OmnichannelProvider>{children}</OmnichannelProvider>
+																										</InstagramPageContextProvider>
+																									</AddressProvider>
+																								</DailyTasksProvider>
+																							</PaymentResultProvider>
+																						</UserPreviousPageProvider>
+																					</CallProvider>
+																				</VideoConfProvider>
+																			</ActionManagerProvider>
+																		</UserPresenceProvider>
+																	</OmnichannelRoomIconProvider>
+																</AuthorizationProvider>
+															</ModalProvider>
+														</DeviceProvider>
+													</UserProvider>
+												</CustomSoundProvider>
+											</AvatarUrlProvider>
+										</LayoutProvider>
+									</ToastMessagesProvider>
+								</EmojiPickerProvider>
 							</TooltipProvider>
 						</SessionProvider>
 					</TranslationProvider>
