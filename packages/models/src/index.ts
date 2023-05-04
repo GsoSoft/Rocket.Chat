@@ -75,6 +75,7 @@ import type {
 	IFederationRoomEventsModel,
 	IAppsTokensModel,
 	IAuditLogModel,
+	ICronHistoryModel,
 	IMigrationsModel,
 } from '@rocket.chat/model-typings';
 
@@ -171,6 +172,7 @@ export const OmnichannelServiceLevelAgreements = proxify<IOmnichannelServiceLeve
 	'IOmnichannelServiceLevelAgreementsModel',
 );
 export const AuditLog = proxify<IAuditLogModel>('IAuditLogModel');
+export const CronHistory = proxify<ICronHistoryModel>('ICronHistoryModel');
 export const Migrations = proxify<IMigrationsModel>('IMigrationsModel');
 // gso expansion , each model here is like a mongodb Collection
 export * from './gso';

@@ -2,9 +2,9 @@ import type { ReactElement } from 'react';
 import React, {useContext, useState, useEffect, useMemo, Suspense } from 'react';
 import { useSyncExternalStore } from 'use-sync-external-store/shim';
 
+import { useAnalytics } from '../../../app/analytics/client/loadScript';
 import { DailyTasksContext, DispatchDailyTasksContext } from '../../contexts/DailyTasksContext/GlobalState';
 import { appLayout } from '../../lib/appLayout';
-import { blazePortals, useBlazePortals } from '../../lib/portals/blazePortals';
 import PageLoading from './PageLoading';
 import { useEscapeKeyStroke } from './hooks/useEscapeKeyStroke';
 import { useGoogleTagManager } from './hooks/useGoogleTagManager';
@@ -22,6 +22,7 @@ const AppLayout = (): ReactElement => {
 
 	useMessageLinkClicks();
 	useGoogleTagManager();
+	useAnalytics();
 	useEscapeKeyStroke();
 
 	const { currentLocation } = useContext(DailyTasksContext);
@@ -75,12 +76,9 @@ const AppLayout = (): ReactElement => {
 	});
 	const layout = useSyncExternalStore(appLayout.subscribe, appLayout.getSnapshot);
 
-	const [portals] = useBlazePortals(blazePortals);
-
 	return (
 		<>
 			<Suspense fallback={<PageLoading />}>{layout}</Suspense>
-			{portals}
 		</>
 	);
 };
